@@ -28,12 +28,10 @@ async function main() {                //funcion asincrona que enviamos con main
 main().catch((err) => console.log(err));  //le pasamos la funcion, y si hay un error se lo pasamos
 
 
-const recetasRoutes = require('./routes/recetas.routes')
-const rutinasRoutes = require('./routes/rutinas.routes')
+const recipeRoutes = require('./routes/recipe.routes')
 const userRoutes = require('./routes/user.routes')
 
-app.use('/recetas', recetasRoutes);
-app.use('/rutinas', rutinasRoutes);
+app.use('/recipe', recipeRoutes);
 app.use('/user', userRoutes);
 
 app.get('/', (req, res) => {
