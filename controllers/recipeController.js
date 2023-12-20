@@ -13,9 +13,9 @@ async function createRecipe(req, res) {
 }
 
 async function getAllRecipes(req, res) {
-  Recipe.find()
+  Recipe.find(res.filters)
     .then((recipes) => {
-      console.log('all recipes found', recipes)
+      //console.log('all recipes found', recipes)
       res.status(200).json(recipes)
     })
     .catch((err) => {
