@@ -1,8 +1,16 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const cors = require('cors')
 
 app.use(express.json())
+
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  }),
+)
 
 require('dotenv').config()
 
@@ -17,24 +25,24 @@ const mongoDB = //string que enviamos
   process.env.DB_SERVER +
   '/' +
   process.env.DB_NAME +
-  '?retryWrites=true&w=majority';
-console.log(mongoDB, 'mongoDB');
+  '?retryWrites=true&w=majority'
+console.log(mongoDB, 'mongoDB')
 
-
-
-async function main() {                //funcion asincrona que enviamos con main que es una convencion 
-  await mongoose.connect(mongoDB);
+async function main() {
+  //funcion asincrona que enviamos con main que es una convencion
+  await mongoose.connect(mongoDB)
 }
-main().catch((err) => console.log(err));  //le pasamos la funcion, y si hay un error se lo pasamos
-
+main().catch((err) => console.log(err)) //le pasamos la funcion, y si hay un error se lo pasamos
 
 const recipeRoutes = require('./routes/recipe.routes')
+const recipeMiddleware = require('./middlewares/recipe.middleware')
 const userRoutes = require('./routes/user.routes')
 
-app.use('/recipe', recipeRoutes);
-app.use('/user', userRoutes);
+app.use('/recipe', recipeMiddleware.filters, recipeRoutes)
+app.use('/user', userRoutes)
 
 app.get('/', (req, res) => {
+  console.log(process.env.DB_USER)
   res.send('Hello World!')
 })
 
