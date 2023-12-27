@@ -14,6 +14,7 @@ const categories = [
   'Lactose Free',
   'Paleo',
   'Keto',
+  'High Protein',
 ]
 
 const recipeSchema = new Schema({
@@ -60,7 +61,7 @@ const recipeSchema = new Schema({
   },
   createdAt: { type: Date, default: Date.now },
   modifiedAt: { type: Date, default: Date.now },
-  author: { type: String },
+  author: { type: String, required: true },
 })
 
 module.exports = mongoose.model('Recipe', recipeSchema)
