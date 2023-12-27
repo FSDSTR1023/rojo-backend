@@ -16,6 +16,7 @@ const categories = [
   'Keto',
   'High Protein',
   'Quick Meals',
+  'High Fiber',
 ]
 
 const recipeSchema = new Schema({
