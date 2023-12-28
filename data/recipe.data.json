@@ -1,0 +1,196 @@
+[
+  {
+    "title": "Ensalada de Garbanzos",
+    "ingredients": [
+      "Garbanzos cocidos",
+      "Pimiento rojo",
+      "Pimiento verde",
+      "Cebolla morada",
+      "Pepino",
+      "Perejil fresco",
+      "Aceite de oliva",
+      "Vinagre",
+      "Sal",
+      "Pimienta"
+    ],
+    "preparation": [
+      {
+        "title": "Paso 1: Preparar los Garbanzos",
+        "description": "Enjuaga y escurre los garbanzos cocidos. Resérvalos en un bol grande."
+      },
+      {
+        "title": "Paso 2: Cortar Vegetales",
+        "description": "Pica finamente el pimiento rojo, el pimiento verde, la cebolla morada y el pepino. Añade al bol con los garbanzos."
+      },
+      {
+        "title": "Paso 3: Agregar Perejil y Aliño",
+        "description": "Pica el perejil fresco y añádelo a la ensalada. Prepara un aliño mezclando aceite de oliva, vinagre, sal y pimienta. Vierte sobre la ensalada y mezcla bien."
+      },
+      {
+        "title": "Paso 4: Refrigerar y Servir",
+        "description": "Refrigera la ensalada durante al menos 30 minutos antes de servir para que los sabores se mezclen. Sirve fría como plato principal o acompañamiento."
+      }
+    ],
+    "difficulty": "EASY",
+    "preparationTime": "FAST",
+    "imageUrl": "https://www.paulinacocina.net/wp-content/uploads/2022/05/ensalada-de-garbanzos-receta-800x534.jpg",
+    "categories": ["Healthy", "Vegetarian", "Vegan", "High Protein", "Quick Meals"],
+    "rating": 0,
+    "opinions": [],
+    "author": "657b18ed4bef22d724acd501"
+  },
+  {
+    "title": "Ensalada de Quinoa y Vegetales Asados",
+    "ingredients": [
+      "Quinoa",
+      "Calabacín",
+      "Pimiento rojo",
+      "Berenjena",
+      "Cebolla",
+      "Tomates cherry",
+      "Aceite de oliva",
+      "Hierbas frescas (tomillo, romero)",
+      "Sal",
+      "Pimienta"
+    ],
+    "preparation": [
+      {
+        "title": "Paso 1: Cocinar la Quinoa",
+        "description": "Cocina la quinoa según las instrucciones del paquete."
+      },
+      {
+        "title": "Paso 2: Asar Vegetales",
+        "description": "Corta los vegetales en trozos, mézclalos con aceite y hierbas. Asa en el horno hasta que estén tiernos."
+      },
+      {
+        "title": "Paso 3: Mezclar Ingredientes",
+        "description": "Mezcla la quinoa cocida con los vegetales asados."
+      },
+      {
+        "title": "Paso 4: Aliñar y Refrigerar",
+        "description": "Aliña la ensalada con aceite de oliva, sal y pimienta. Refrigera por al menos 1 hora antes de servir."
+      }
+    ],
+    "difficulty": "EASY",
+    "preparationTime": "MODERATE",
+    "imageUrl": "https://www.recetaslider.cl/wp-content/uploads/2021/06/principal_5cb62f13ceb97.jpg",
+    "categories": ["Healthy", "Vegetarian", "Vegan", "High Protein", "Quick Meals"],
+    "rating": 0,
+    "opinions": [],
+    "author": "657b18ed4bef22d724acd501"
+  },
+  {
+    "title": "Ensalada de Pasta Mediterránea",
+    "ingredients": [
+      "Pasta (penne, fusilli)",
+      "Tomate cherry",
+      "Aceitunas negras",
+      "Queso feta",
+      "Pepino",
+      "Albahaca fresca",
+      "Aceite de oliva",
+      "Vinagre balsámico",
+      "Sal",
+      "Pimienta"
+    ],
+    "preparation": [
+      {
+        "title": "Paso 1: Cocinar la Pasta",
+        "description": "Cocina la pasta al dente según las instrucciones del paquete."
+      },
+      {
+        "title": "Paso 2: Preparar Ingredientes",
+        "description": "Corta los tomates cherry, las aceitunas, el pepino y el queso feta en trozos."
+      },
+      {
+        "title": "Paso 3: Mezclar Ingredientes",
+        "description": "Mezcla la pasta cocida con los vegetales y el queso."
+      },
+      {
+        "title": "Paso 4: Aliñar y Reposar",
+        "description": "Agrega aceite de oliva, vinagre balsámico, sal y pimienta. Deja reposar antes de servir."
+      }
+    ],
+    "difficulty": "EASY",
+    "preparationTime": "FAST",
+    "categories": ["Healthy", "Vegetarian", "Quick Meals"],
+    "imageUrl": "https://eci.contebio.com/material/aptc/images/aptc/1313281/pasta-mediterranea_0.jpg",
+    "rating": 0,
+    "opinions": [],
+    "author": "657b18ed4bef22d724acd501"
+  },
+  {
+    "title": "Ensalada de Espinacas y Fresas",
+    "ingredients": [
+      "Espinacas frescas",
+      "Fresas",
+      "Queso de cabra",
+      "Nueces",
+      "Cebolla roja",
+      "Aceite de oliva",
+      "Vinagre balsámico",
+      "Sal",
+      "Pimienta"
+    ],
+    "preparation": [
+      {
+        "title": "Paso 1: Preparar Ingredientes",
+        "description": "Lava y seca las espinacas y las fresas. Corta las fresas en rodajas y la cebolla en juliana. Desmenuza el queso de cabra."
+      },
+      {
+        "title": "Paso 2: Mezclar Ingredientes",
+        "description": "Combina las espinacas, fresas, cebolla, queso de cabra y nueces en un bol grande."
+      },
+      {
+        "title": "Paso 3: Aliñar y Servir",
+        "description": "Prepara un aliño con aceite de oliva, vinagre balsámico, sal y pimienta. Aliña la ensalada y sirve."
+      }
+    ],
+    "difficulty": "EASY",
+    "preparationTime": "FAST",
+    "imageUrl": "https://s1.eestatic.com/2021/03/02/cocinillas/recetas/ensaladas/562955653_174333694_1706x960.jpg",
+    "categories": ["Healthy", "Vegetarian", "Quick Meals"],
+    "rating": 0,
+    "opinions": [],
+    "author": "657b18ed4bef22d724acd501"
+  },
+  {
+    "title": "Ensalada de Arroz y Vegetales Asados",
+    "ingredients": [
+      "Arroz integral cocido",
+      "Calabaza",
+      "Zanahoria",
+      "Brócoli",
+      "Pimiento amarillo",
+      "Aceite de oliva",
+      "Hierbas frescas (romero, tomillo)",
+      "Sal",
+      "Pimienta"
+    ],
+    "preparation": [
+      {
+        "title": "Paso 1: Cocinar el Arroz",
+        "description": "Cocina el arroz integral según las instrucciones del paquete y deja enfriar."
+      },
+      {
+        "title": "Paso 2: Asar Vegetales",
+        "description": "Corta los vegetales en trozos, añade aceite y hierbas, y asa en el horno."
+      },
+      {
+        "title": "Paso 3: Mezclar Ingredientes",
+        "description": "Mezcla el arroz cocido con los vegetales asados."
+      },
+      {
+        "title": "Paso 4: Sazonar y Servir",
+        "description": "Añade sal, pimienta y más hierbas si es necesario. Sirve caliente o fría."
+      }
+    ],
+    "difficulty": "MEDIUM",
+    "preparationTime": "MODERATE",
+    "imageUrl": "https://mahatmarice.com/wp-content/uploads/2019/05/Middle-Eastern-Roasted-Sweet-Potato-Cauliflower-Jasmine-Red-White-Rice.jpg.webp",
+    "categories": ["Healthy", "Vegetarian", "High Fiber"],
+    "rating": 0,
+    "opinions": [],
+    "author": "657b18ed4bef22d724acd501"
+  }
+]
