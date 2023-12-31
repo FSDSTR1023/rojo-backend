@@ -32,7 +32,7 @@ async function updateRecipe(req, res) {
     })
     .catch((err) => {
       console.log(err, 'recipe not updated, try again')
-      res.status(400).son(err)
+      res.status(400).json(err)
     })
 }
 
