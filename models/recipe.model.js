@@ -60,7 +60,7 @@ const recipeSchema = new Schema({
     {
       text: { type: String, minlength: 3 },
       rating: { type: Number, min: 1, max: 5 },
-      user: { type: String },
+      user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     },
   ],
   rating: {

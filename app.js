@@ -4,6 +4,7 @@ const port = 3000
 const cors = require('cors')
 const db = require('./config/db')
 
+const testMiddleware = require('./middlewares/test.middleware')
 const recipeRoutes = require('./routes/recipe.routes')
 const recipeMiddleware = require('./middlewares/recipe.middleware')
 const userRoutes = require('./routes/user.routes')
@@ -20,6 +21,9 @@ app.use(
 
 // Connect to DB
 db()
+
+// Middlewares
+app.use(testMiddleware.logginCallRoute)
 
 //Routes
 app.use('/recipe', recipeMiddleware.filters, recipeRoutes)
