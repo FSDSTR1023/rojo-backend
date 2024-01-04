@@ -53,4 +53,28 @@ async function loginUser(req, res) {
     })
 }
 
-module.exports = { getAllUsers, createUser, getUserById, loginUser }
+async function updateUser(req, res) {
+  User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then((recipes) => {
+      console.log('User updated', recipes)
+      res.status(200).json(recipes)
+    })
+    .catch((err) => {
+      console.log(err, 'User not updated, try again')
+      res.status(400).json(err)
+    })
+}
+
+async function deleteUser(req, res) {
+  User.findByIdAndDelete(req.params.id)
+    .then((user) => {
+      console.log('User deleted')
+      res.status(200).json(user)
+    })
+    .catch((err) => {
+      console.log(err, 'User not deleted')
+      res.status(400).json(err)
+    })
+}
+
+module.exports = { getAllUsers, createUser, getUserById, loginUser, updateUser, deleteUser }
