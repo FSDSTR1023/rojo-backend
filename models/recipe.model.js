@@ -17,6 +17,14 @@ const categories = [
   'High Protein',
   'Quick Meals',
   'High Fiber',
+  'Italian',
+  'Gourmet',
+  'Dinner Parties',
+  'French',
+  'Special Occasions',
+  'Comfort Food',
+  'Japanese',
+  'Indian',
 ]
 
 const recipeSchema = new Schema({
