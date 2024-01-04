@@ -3,11 +3,9 @@ const User = require('../models/user.model')
 async function createUser(req, res) {
   User.create(req.body)
     .then((user) => {
-      console.log('user created', user)
       res.status(200).json(user)
     })
     .catch((err) => {
-      console.log(err, ' <---- error try again something went wrong')
       res.status(400).json(err)
     })
 }
@@ -15,11 +13,9 @@ async function createUser(req, res) {
 async function getAllUsers(req, res) {
   User.find()
     .then((users) => {
-      console.log('users found', users)
       res.status(200).json(users)
     })
     .catch((err) => {
-      console.log(err, ' <---- error try again something went wrong')
       res.status(400).json(err)
     })
 }
@@ -27,11 +23,9 @@ async function getAllUsers(req, res) {
 async function getUserById(req, res) {
   User.findById(req.params.id)
     .then((user) => {
-      console.log('user finded', user)
       res.status(200).json(user)
     })
     .catch((err) => {
-      console.log(err, 'user not finded')
       res.status(400).json(err)
     })
 }
@@ -48,7 +42,6 @@ async function loginUser(req, res) {
       res.status(200).json(user)
     })
     .catch((err) => {
-      console.log(err, 'error, try again something went wrong')
       res.status(400).json(err)
     })
 }
@@ -56,11 +49,9 @@ async function loginUser(req, res) {
 async function updateUser(req, res) {
   User.findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then((recipes) => {
-      console.log('User updated', recipes)
       res.status(200).json(recipes)
     })
     .catch((err) => {
-      console.log(err, 'User not updated, try again')
       res.status(400).json(err)
     })
 }
@@ -68,13 +59,31 @@ async function updateUser(req, res) {
 async function deleteUser(req, res) {
   User.findByIdAndDelete(req.params.id)
     .then((user) => {
-      console.log('User deleted')
       res.status(200).json(user)
     })
     .catch((err) => {
-      console.log(err, 'User not deleted')
       res.status(400).json(err)
     })
 }
 
-module.exports = { getAllUsers, createUser, getUserById, loginUser, updateUser, deleteUser }
+async function followUser(req, res) {
+  const { followerUser, followedUser } = req.body
+
+  if (followerUser === followedUser) {
+    return res.status(400).json({ msg: 'A user cannot follow themself' })
+  }
+
+  Promise.all([
+    User.findByIdAndUpdate(followerUser, { $addToSet: { following: followedUser } }, { new: true }),
+    User.findByIdAndUpdate(followedUser, { $addToSet: { followers: followerUser } }, { new: true }),
+  ])
+    .then(([user1, user2]) => {
+      const msg = `User ${user1.userName} is now following ${user2.userName}`
+      res.status(200).json({ msg })
+    })
+    .catch((err) => {
+      res.status(400).json(err)
+    })
+}
+
+module.exports = { getAllUsers, createUser, getUserById, loginUser, updateUser, deleteUser, followUser }
