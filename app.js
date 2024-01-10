@@ -6,7 +6,7 @@ const db = require('./config/db')
 const cookieParser = require('cookie-parser')
 
 const recipeRoutes = require('./routes/recipe.routes')
-const recipeMiddleware = require('./middlewares/recipe.middleware')
+const { filters } = require('./middlewares/recipe.middleware')
 const userRoutes = require('./routes/user.routes')
 const { auth } = require('./middlewares/auth.middleware')
 
@@ -20,14 +20,11 @@ app.use(
 )
 app.use(cookieParser())
 
-// Middlewares
-app.use(auth)
-
 // Connect to DB
 db()
 
 //Routes
-app.use('/recipe', recipeMiddleware.filters, recipeRoutes)
+app.use('/recipe', auth, filters, recipeRoutes)
 app.use('/user', userRoutes)
 
 app.get('/', (req, res) => {

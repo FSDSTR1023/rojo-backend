@@ -1,9 +1,6 @@
 const jwt = require('jsonwebtoken')
 
 function auth(req, res, next) {
-  // Check if trying to login
-  if (req.path === '/user/login') return next()
-
   try {
     // Obtain session cookie token
     const { token } = req.cookies
