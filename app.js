@@ -3,6 +3,7 @@ const app = express()
 const port = 3000
 const cors = require('cors')
 const db = require('./config/db')
+const cookieParser = require('cookie-parser')
 
 const recipeRoutes = require('./routes/recipe.routes')
 const recipeMiddleware = require('./middlewares/recipe.middleware')
@@ -10,13 +11,13 @@ const userRoutes = require('./routes/user.routes')
 
 //Config
 app.use(express.json())
-
 app.use(
   cors({
     origin: 'http://localhost:5173',
     credentials: true,
   }),
 )
+app.use(cookieParser())
 
 // Connect to DB
 db()
