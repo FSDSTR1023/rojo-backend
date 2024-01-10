@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 async function createUser(req, res) {
-  bcrypt.hash(req.body.password, process.env.SALT_ROUNDS, (err, hash) => {
+  const saltRounds = 10
+  bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
     if (err) {
       return res.status(400).json(err)
     }
