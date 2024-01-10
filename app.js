@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser')
 const recipeRoutes = require('./routes/recipe.routes')
 const recipeMiddleware = require('./middlewares/recipe.middleware')
 const userRoutes = require('./routes/user.routes')
+const { auth } = require('./middlewares/auth.middleware')
 
 //Config
 app.use(express.json())
@@ -18,6 +19,9 @@ app.use(
   }),
 )
 app.use(cookieParser())
+
+// Middlewares
+app.use(auth)
 
 // Connect to DB
 db()

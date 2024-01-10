@@ -42,7 +42,10 @@ async function loginUser(req, res) {
         return res.status(403).json({ msg: 'Incorrect Password' })
       }
 
-      const token = jwt.sign({ userName: user.userName, country: user.country }, process.env.JWT_KEY)
+      const token = jwt.sign(
+        { userName: user.userName, country: user.country, authorization: 'user' },
+        process.env.JWT_KEY,
+      )
       res
         .cookie('token', token, {
           httpOnly: true,
