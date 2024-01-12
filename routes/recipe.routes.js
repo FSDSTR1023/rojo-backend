@@ -8,6 +8,7 @@ router.get('/:id', recipeController.getRecipeById)
 
 // POST
 router.post('/', recipeController.createRecipe)
+router.post('/', recipeController.markRecipeAsFavorite)
 
 // PUT
 router.put('/:id', recipeController.updateRecipe)
