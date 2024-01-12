@@ -94,4 +94,64 @@ async function deleteUser(req, res) {
     })
 }
 
-module.exports = { getAllUsers, createUser, getUserById, loginUser, updateUser, deleteUser }
+async function followUser(req, res) {
+  const { followerUser, followedUser } = req.body
+
+  if (followerUser === followedUser) {
+    return res.status(400).json({ msg: 'A user cannot follow themself' })
+  }
+
+  Promise.all([
+    User.findByIdAndUpdate(followerUser, { $addToSet: { following: followedUser } }, { new: true }),
+    User.findByIdAndUpdate(followedUser, { $addToSet: { followers: followerUser } }, { new: true }),
+  ])
+    .then(([user1, user2]) => {
+      const msg = `User ${user1.userName} is now following ${user2.userName}`
+      res.status(200).json({ msg })
+    })
+    .catch((err) => {
+      res.status(400).json(err)
+    })
+}
+
+async function addFavoriteRecipe(req, res) {
+  const { userId, recipeId } = req.body;
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { favRecipes: recipeId } },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
+async function removeFavoriteRecipe(req, res) {
+  const { userId, recipeId } = req.body;
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { favRecipes: recipeId } },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
+module.exports = { getAllUsers, createUser, getUserById, loginUser, updateUser, deleteUser, followUser, addFavoriteRecipe, removeFavoriteRecipe }

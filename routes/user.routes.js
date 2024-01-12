@@ -3,16 +3,24 @@ const router = express.Router()
 const userController = require('../controllers/userController')
 const { auth } = require('../middlewares/auth.middleware')
 
-router.get('/', auth, userController.getAllUsers)
 
-router.get('/:id', auth, userController.getUserById)
+// GET
+router.get('/', userController.getAllUsers)
+router.get('/:id', userController.getUserById)
 
-router.put('/:id', auth, userController.updateUser)
-
+// POST
 router.post('/', userController.createUser)
-
 router.post('/login', userController.loginUser)
+router.post('/favorite', userController.addFavoriteRecipe)
 
-router.delete('/:id', auth, userController.deleteUser)
+// PUT
+router.put('/:id', userController.updateUser)
+
+// PATCH
+router.patch('/follow', userController.followUser)
+
+// DELETE
+router.delete('/:id', userController.deleteUser)
+router.delete('/', userController.removeFavoriteRecipe)
 
 module.exports = router

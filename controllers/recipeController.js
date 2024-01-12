@@ -1,13 +1,12 @@
 const Recipe = require('../models/recipe.model')
+const User = require('../models/user.model')
 
 async function createRecipe(req, res) {
   Recipe.create(req.body)
     .then((recipes) => {
-      console.log('recetas creadas', recipes)
-      res.status(200).json(recipes)
+      res.status(201).json(recipes)
     })
     .catch((err) => {
-      console.log(err, 'error y que intentes denuevo por que algo fue mal')
       res.status(400).json(err)
     })
 }
@@ -15,11 +14,9 @@ async function createRecipe(req, res) {
 async function getAllRecipes(req, res) {
   Recipe.find(res.filters)
     .then((recipes) => {
-      //console.log('all recipes found', recipes)
       res.status(200).json(recipes)
     })
     .catch((err) => {
-      console.log(err, 'all recipes not found, try again')
       res.status(400).json(err)
     })
 }
@@ -27,11 +24,9 @@ async function getAllRecipes(req, res) {
 async function updateRecipe(req, res) {
   Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then((recipes) => {
-      console.log('recipe updated', recipes)
       res.status(200).json(recipes)
     })
     .catch((err) => {
-      console.log(err, 'recipe not updated, try again')
       res.status(400).json(err)
     })
 }
@@ -39,11 +34,9 @@ async function updateRecipe(req, res) {
 async function getRecipeById(req, res) {
   Recipe.findById(req.params.id)
     .then((recipes) => {
-      console.log('recipe found')
       res.status(200).json(recipes)
     })
     .catch((err) => {
-      console.log(err, 'recipe not found, try again')
       res.status(400).json(err)
     })
 }
@@ -51,13 +44,74 @@ async function getRecipeById(req, res) {
 async function deleteRecipe(req, res) {
   Recipe.findByIdAndDelete(req.params.id)
     .then((recipes) => {
-      console.log('recipe deleted')
       res.status(200).json(recipes)
     })
     .catch((err) => {
-      console.log(err, 'recipe not deleted')
       res.status(400).json(err)
     })
 }
 
-module.exports = { createRecipe, getAllRecipes, updateRecipe, getRecipeById, deleteRecipe }
+async function addOpinion(req, res) {
+  const { text, rating, user } = req.body
+  const opinion = { text, rating, user }
+
+  try {
+    // Get current recipe
+    const recipe = await Recipe.findById(req.params.id)
+
+    // Update rating with new opinion rating
+    const opinionsLength = recipe.opinions.length
+    const currentRating = recipe.rating
+    const newRating = (currentRating * opinionsLength + rating) / (opinionsLength + 1)
+
+    // Add comment to the array and update rating
+    const updatedRecipe = await Recipe.findByIdAndUpdate(
+      req.params.id,
+      { $addToSet: { opinions: opinion }, rating: newRating },
+      { new: true },
+    )
+
+    // Extract updated values
+    const updatedOpinion = updatedRecipe.opinions.pop()
+    const updatedRating = updatedRecipe.rating
+
+    // Send response
+    res.status(200).json({
+      msg: 'Opinion added successfully',
+      updatedOpinion,
+      updatedRating,
+    })
+  } catch (err) {
+    res.status(400).json(err)
+  }
+}
+
+async function markRecipeAsFavorite(req, res) {
+  const { userId, recipeId } = req.body;
+
+  try {
+    // Verifica si la receta existe
+    const recipe = await Recipe.findById(recipeId);
+    if (!recipe) {
+      return res.status(404).json({ msg: 'Recipe not found' });
+    }
+
+    // Agrega la receta a la lista de favoritos del usuario
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { favRecipes: recipeId } },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    res.status(200).json({ msg: 'Recipe marked as favorite successfully', user });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
+
+module.exports = { createRecipe, getAllRecipes, updateRecipe, getRecipeById, deleteRecipe, addOpinion, markRecipeAsFavorite }

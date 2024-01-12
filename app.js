@@ -5,6 +5,7 @@ const cors = require('cors')
 const db = require('./config/db')
 const cookieParser = require('cookie-parser')
 
+const testMiddleware = require('./middlewares/test.middleware')
 const recipeRoutes = require('./routes/recipe.routes')
 const { filters } = require('./middlewares/recipe.middleware')
 const userRoutes = require('./routes/user.routes')
@@ -22,6 +23,9 @@ app.use(cookieParser())
 
 // Connect to DB
 db()
+
+// Middlewares
+app.use(testMiddleware.logginCallRoute)
 
 //Routes
 app.use('/recipe', auth, filters, recipeRoutes)
