@@ -2,6 +2,7 @@ const dotenv = require('dotenv')
 const fs = require('fs')
 const colors = require('colors')
 const db = require('./config/db')
+const bcrypt = require('bcrypt')
 
 //Load models
 const Recipe = require('./models/recipe.model')
@@ -10,14 +11,23 @@ const User = require('./models/user.model')
 //Connect to db
 db().then()
 
-// Read the JSON files
-const recipes = JSON.parse(fs.readFileSync('./data/recipe.data.json', 'utf-8'))
-const users = JSON.parse(fs.readFileSync('./data/user.data.json', 'utf-8'))
-
 // Import sample data in DB
 const importData = async () => {
   try {
-    await User.create(users)
+    // Read the JSON files
+    const recipes = JSON.parse(fs.readFileSync('./data/recipe.data.json', 'utf-8'))
+    const users = JSON.parse(fs.readFileSync('./data/user.data.json', 'utf-8'))
+
+    // Encrypt passwords
+    const saltRounds = 10
+    const encryptedUsers = users.map((user) => {
+      const encryptedPassword = bcrypt.hashSync(user.password, saltRounds)
+      console.log(encryptedPassword)
+      return { ...user, password: encryptedPassword }
+    })
+
+    // Create ussers
+    await User.create(encryptedUsers)
 
     // Assign random user
     const createdUsers = await User.find()
@@ -27,6 +37,7 @@ const importData = async () => {
       return { ...recipe, author }
     })
 
+    // Create recipes
     await Recipe.create(recipesWithUser)
 
     console.log(`Data successfully imported`.green.inverse)
