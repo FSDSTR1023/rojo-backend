@@ -76,8 +76,8 @@ async function loginUser(req, res) {
 
 async function updateUser(req, res) {
   User.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    .then((recipes) => {
-      res.status(200).json(recipes)
+    .then((user) => {
+      res.status(200).json(user)
     })
     .catch((err) => {
       res.status(400).json(err)
@@ -115,43 +115,45 @@ async function followUser(req, res) {
 }
 
 async function addFavoriteRecipe(req, res) {
-  const { userId, recipeId } = req.body;
+  const { userId, recipeId } = req.body
 
   try {
-    const user = await User.findByIdAndUpdate(
-      userId,
-      { $addToSet: { favRecipes: recipeId } },
-      { new: true }
-    );
+    const user = await User.findByIdAndUpdate(userId, { $addToSet: { favRecipes: recipeId } }, { new: true })
 
     if (!user) {
-      return res.status(404).json({ msg: 'User not found' });
+      return res.status(404).json({ msg: 'User not found' })
     }
 
-    res.status(200).json(user);
+    res.status(200).json(user)
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json(err)
   }
 }
 
 async function removeFavoriteRecipe(req, res) {
-  const { userId, recipeId } = req.body;
+  const { userId, recipeId } = req.body
 
   try {
-    const user = await User.findByIdAndUpdate(
-      userId,
-      { $pull: { favRecipes: recipeId } },
-      { new: true }
-    );
+    const user = await User.findByIdAndUpdate(userId, { $pull: { favRecipes: recipeId } }, { new: true })
 
     if (!user) {
-      return res.status(404).json({ msg: 'User not found' });
+      return res.status(404).json({ msg: 'User not found' })
     }
 
-    res.status(200).json(user);
+    res.status(200).json(user)
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json(err)
   }
 }
 
-module.exports = { getAllUsers, createUser, getUserById, loginUser, updateUser, deleteUser, followUser, addFavoriteRecipe, removeFavoriteRecipe }
+module.exports = {
+  getAllUsers,
+  createUser,
+  getUserById,
+  loginUser,
+  updateUser,
+  deleteUser,
+  followUser,
+  addFavoriteRecipe,
+  removeFavoriteRecipe,
+}
