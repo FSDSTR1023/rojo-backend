@@ -9,6 +9,7 @@ router.get('/:id', userController.getUserById)
 // POST
 router.post('/', userController.createUser)
 router.post('/login', userController.loginUser)
+router.post('/favorite', userController.addFavoriteRecipe)
 
 // PUT
 router.put('/:id', userController.updateUser)
@@ -18,5 +19,6 @@ router.patch('/follow', userController.followUser)
 
 // DELETE
 router.delete('/:id', userController.deleteUser)
+router.delete('/', userController.removeFavoriteRecipe)
 
 module.exports = router
