@@ -19,7 +19,7 @@ async function createUser(req, res) {
   })
 }
 
-async function getAllUsers(req, res) {
+async function getAllUsers(_req, res) {
   User.find()
     .then((users) => {
       res.status(200).json(users)
@@ -56,10 +56,7 @@ async function loginUser(req, res) {
         }
 
         // Generate token
-        const token = jwt.sign(
-          { userName: user.userName, country: user.country, authorization: 'user' },
-          process.env.JWT_KEY,
-        )
+        const token = jwt.sign({ id: user._id }, process.env.JWT_KEY)
 
         // Send response with cookie token
         res
@@ -94,8 +91,9 @@ async function deleteUser(req, res) {
     })
 }
 
-async function followUser(req, res) {
-  const { followerUser, followedUser } = req.body
+async function addFollower(req, res) {
+  const followerUser = req.userId
+  const followedUser = req.params.id
 
   if (followerUser === followedUser) {
     return res.status(400).json({ msg: 'A user cannot follow themself' })
@@ -114,8 +112,30 @@ async function followUser(req, res) {
     })
 }
 
+async function removeFollower(req, res) {
+  const followerUser = req.userId
+  const followedUser = req.params.id
+
+  if (followerUser === followedUser) {
+    return res.status(400).json({ msg: 'A user cannot follow themself' })
+  }
+
+  Promise.all([
+    User.findByIdAndUpdate(followerUser, { $pull: { following: followedUser } }, { new: true }),
+    User.findByIdAndUpdate(followedUser, { $pull: { followers: followerUser } }, { new: true }),
+  ])
+    .then(([user1, user2]) => {
+      const msg = `User ${user1.userName} is now not following ${user2.userName}`
+      res.status(200).json({ msg })
+    })
+    .catch((err) => {
+      res.status(400).json(err)
+    })
+}
+
 async function addFavoriteRecipe(req, res) {
-  const { userId, recipeId } = req.body
+  const userId = req.userId
+  const recipeId = req.params.id
 
   try {
     const user = await User.findByIdAndUpdate(userId, { $addToSet: { favRecipes: recipeId } }, { new: true })
@@ -131,7 +151,8 @@ async function addFavoriteRecipe(req, res) {
 }
 
 async function removeFavoriteRecipe(req, res) {
-  const { userId, recipeId } = req.body
+  const userId = req.userId
+  const recipeId = req.params.id
 
   try {
     const user = await User.findByIdAndUpdate(userId, { $pull: { favRecipes: recipeId } }, { new: true })
@@ -153,7 +174,8 @@ module.exports = {
   loginUser,
   updateUser,
   deleteUser,
-  followUser,
+  addFollower,
+  removeFollower,
   addFavoriteRecipe,
   removeFavoriteRecipe,
 }
