@@ -4,10 +4,10 @@ function auth(req, res, next) {
   try {
     // Obtain session cookie token
     const { token } = req.cookies
-    const { userName, country, authorization } = jwt.verify(token, process.env.JWT_KEY)
+    const { id } = jwt.verify(token, process.env.JWT_KEY)
 
-    // Check authorization
-    if (authorization && authorization === 'user') {
+    if (id) {
+      req.userId = id
       next()
     } else {
       res.status(401).json({ msg: 'Unauthorized user' })

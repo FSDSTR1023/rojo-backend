@@ -52,7 +52,8 @@ async function deleteRecipe(req, res) {
 }
 
 async function addOpinion(req, res) {
-  const { text, rating, user } = req.body
+  const { text, rating } = req.body
+  const user = req.userId
   const opinion = { text, rating, user }
 
   try {
@@ -87,31 +88,34 @@ async function addOpinion(req, res) {
 }
 
 async function markRecipeAsFavorite(req, res) {
-  const { userId, recipeId } = req.body;
+  const { userId, recipeId } = req.body
 
   try {
     // Verifica si la receta existe
-    const recipe = await Recipe.findById(recipeId);
+    const recipe = await Recipe.findById(recipeId)
     if (!recipe) {
-      return res.status(404).json({ msg: 'Recipe not found' });
+      return res.status(404).json({ msg: 'Recipe not found' })
     }
 
     // Agrega la receta a la lista de favoritos del usuario
-    const user = await User.findByIdAndUpdate(
-      userId,
-      { $addToSet: { favRecipes: recipeId } },
-      { new: true }
-    );
+    const user = await User.findByIdAndUpdate(userId, { $addToSet: { favRecipes: recipeId } }, { new: true })
 
     if (!user) {
-      return res.status(404).json({ msg: 'User not found' });
+      return res.status(404).json({ msg: 'User not found' })
     }
 
-    res.status(200).json({ msg: 'Recipe marked as favorite successfully', user });
+    res.status(200).json({ msg: 'Recipe marked as favorite successfully', user })
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json(err)
   }
 }
 
-
-module.exports = { createRecipe, getAllRecipes, updateRecipe, getRecipeById, deleteRecipe, addOpinion, markRecipeAsFavorite }
+module.exports = {
+  createRecipe,
+  getAllRecipes,
+  updateRecipe,
+  getRecipeById,
+  deleteRecipe,
+  addOpinion,
+  markRecipeAsFavorite,
+}
