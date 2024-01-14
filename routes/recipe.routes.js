@@ -14,7 +14,7 @@ router.post('/', recipeController.markRecipeAsFavorite)
 router.put('/:id', recipeController.updateRecipe)
 
 // PATCH
-router.patch('/opinion/:id', recipeController.addOpinion)
+router.patch('/opinion/add/:id', recipeController.addOpinion)
 
 // DELETE
 router.delete('/:id', recipeController.deleteRecipe)

@@ -10,16 +10,17 @@ router.get('/:id', auth, userController.getUserById)
 // POST
 router.post('/', userController.createUser)
 router.post('/login', userController.loginUser)
-router.post('/favorite', auth, userController.addFavoriteRecipe)
 
 // PUT
 router.put('/:id', auth, userController.updateUser)
 
 // PATCH
-router.patch('/follow', auth, userController.followUser)
+router.patch('/follower/add/:id', auth, userController.addFollower)
+router.patch('/follower/remove/:id', auth, userController.removeFollower)
+router.patch('/favorite/add/:id', auth, userController.addFavoriteRecipe)
+router.patch('/favorite/remove/:id', auth, userController.removeFavoriteRecipe)
 
 // DELETE
 router.delete('/:id', auth, userController.deleteUser)
-router.delete('/', auth, userController.removeFavoriteRecipe)
 
 module.exports = router
