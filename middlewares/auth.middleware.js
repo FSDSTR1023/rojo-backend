@@ -2,19 +2,23 @@ const jwt = require('jsonwebtoken')
 
 function auth(req, res, next) {
   try {
+    console.log('auth')
     // Obtain session cookie token
     const { token } = req.cookies
     const { id } = jwt.verify(token, process.env.JWT_KEY)
 
     if (id) {
       req.userId = id
-      next()
+      console.log('auth middleware', req.userId)
     } else {
-      res.status(401).json({ msg: 'Unauthorized user' })
+      return res.status(401).json({ msg: 'Unauthorized user' })
     }
   } catch (err) {
-    res.status(401).json({ err })
+    console.log('no token')
+    return res.status(401).json({ err })
   }
+
+  next()
 }
 
 module.exports = { auth }
