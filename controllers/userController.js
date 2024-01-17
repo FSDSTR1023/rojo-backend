@@ -1,6 +1,5 @@
 const User = require('../models/user.model')
 const bcrypt = require('bcrypt')
-const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 
 async function createUser(req, res) {
@@ -177,7 +176,6 @@ async function removeFavoriteRecipe(req, res) {
 }
 
 async function checkAuthToken(req, res) {
-  console.log('checkauthtoken', req.userId)
   const userId = req.userId
   if (userId) {
     User.findById(userId)
@@ -185,11 +183,9 @@ async function checkAuthToken(req, res) {
         res.status(200).json(user)
       })
       .catch((err) => {
-        console.log('error aqui')
         res.status(400).json(err)
       })
   } else {
-    console.log('error no id')
     res.status(400).json(err)
   }
 }
