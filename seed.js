@@ -22,7 +22,6 @@ const importData = async () => {
     const saltRounds = 10
     const encryptedUsers = users.map((user) => {
       const encryptedPassword = bcrypt.hashSync(user.password, saltRounds)
-      console.log(encryptedPassword)
       return { ...user, password: encryptedPassword }
     })
 

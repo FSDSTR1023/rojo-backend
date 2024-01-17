@@ -5,11 +5,13 @@ const { auth } = require('../middlewares/auth.middleware')
 
 // GET
 router.get('/', auth, userController.getAllUsers)
+router.get('/authWithToken', auth, userController.checkAuthToken)
 router.get('/:id', auth, userController.getUserById)
 
 // POST
 router.post('/', userController.createUser)
 router.post('/login', userController.loginUser)
+router.post('/logout', userController.logoutUser)
 
 // PUT
 router.put('/:id', auth, userController.updateUser)
