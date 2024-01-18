@@ -5,11 +5,21 @@ const element = (array) => {
 }
 
 const elements = (array, n) => {
+  if (n >= array.length) return array
+
   const elements = []
+  const numbers = []
+
   for (let i = 0; i < n; i++) {
     const randomIndex = Math.floor(Math.random() * array.length)
-    elements.push(array[randomIndex])
+
+    if (!numbers.includes(randomIndex)) {
+      elements.push(array[randomIndex])
+    } else {
+      i--
+    }
   }
+
   return elements
 }
 
