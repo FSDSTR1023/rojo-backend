@@ -3,6 +3,7 @@ const fs = require('fs')
 const colors = require('colors')
 const db = require('./config/db')
 const bcrypt = require('bcrypt')
+const random = require('./utils/random.js')
 
 //Load models
 const Recipe = require('./models/recipe.model')
@@ -17,6 +18,7 @@ const importData = async () => {
     // Read the JSON files
     const recipes = JSON.parse(fs.readFileSync('./data/recipe.data.json', 'utf-8'))
     const users = JSON.parse(fs.readFileSync('./data/user.data.json', 'utf-8'))
+    const opinions = JSON.parse(fs.readFileSync('./data/opinion.data.json', 'utf-8'))
 
     // Encrypt passwords
     const saltRounds = 10
@@ -27,13 +29,20 @@ const importData = async () => {
 
     // Create ussers
     await User.create(encryptedUsers)
-
-    // Assign random user
     const createdUsers = await User.find()
+
+    //Assign random user to opinions
+    const opinionsWithUser = opinions.map((opinion) => {
+      const user = random.element(createdUsers)._id
+      return { ...opinion, user }
+    })
+
+    // Assign random user and opinions to recipes
     const recipesWithUser = recipes.map((recipe) => {
-      const randomIndex = Math.floor(Math.random() * createdUsers.length)
-      const author = createdUsers[randomIndex]._id
-      return { ...recipe, author }
+      const author = random.element(createdUsers)._id
+      const numOpinions = random.getRandomIntInclusive(1, 5)
+      const randomOpinions = random.elements(opinionsWithUser, numOpinions)
+      return { ...recipe, author, opinions: randomOpinions }
     })
 
     // Create recipes

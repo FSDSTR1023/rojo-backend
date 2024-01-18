@@ -1,0 +1,102 @@
+[
+  {
+    "text": "Delicious recipe! I'll definitely make it again.",
+    "rating": 5,
+    "user": "IDUsuario1"
+  },
+  {
+    "text": "Easy to follow steps, and the result was amazing.",
+    "rating": 4,
+    "user": "IDUsuario2"
+  },
+  {
+    "text": "Not my favorite, but still decent.",
+    "rating": 3,
+    "user": "IDUsuario3"
+  },
+  {
+    "text": "Too salty for my taste. I would adjust the seasoning next time.",
+    "rating": 2,
+    "user": "IDUsuario4"
+  },
+  {
+    "text": "Terrible recipe. It didn't turn out well at all.",
+    "rating": 1,
+    "user": "IDUsuario5"
+  },
+  {
+    "text": "Fantastic recipe! It quickly became a family favorite.",
+    "rating": 5,
+    "user": "IDUsuario6"
+  },
+  {
+    "text": "The preparation time was longer than expected, but the taste was worth it.",
+    "rating": 4,
+    "user": "IDUsuario7"
+  },
+  {
+    "text": "Average recipe. I've had better, but it's okay.",
+    "rating": 3,
+    "user": "IDUsuario8"
+  },
+  {
+    "text": "Needs more seasoning. I'll adjust it next time.",
+    "rating": 2,
+    "user": "IDUsuario9"
+  },
+  {
+    "text": "Disappointing. I won't be trying this recipe again.",
+    "rating": 1,
+    "user": "IDUsuario10"
+  },
+  {
+    "text": "Incredible taste! The combination of flavors is amazing.",
+    "rating": 5,
+    "user": "IDUsuario11"
+  },
+  {
+    "text": "Clear instructions and great outcome. Highly recommend!",
+    "rating": 4,
+    "user": "IDUsuario12"
+  },
+  {
+    "text": "Decent recipe, but I felt it lacked a bit of excitement.",
+    "rating": 3,
+    "user": "IDUsuario13"
+  },
+  {
+    "text": "Unpleasant taste. I might have done something wrong.",
+    "rating": 2,
+    "user": "IDUsuario14"
+  },
+  {
+    "text": "Worst recipe ever. It was a waste of time and ingredients.",
+    "rating": 1,
+    "user": "IDUsuario15"
+  },
+  {
+    "text": "Absolutely delicious! This recipe exceeded my expectations.",
+    "rating": 5,
+    "user": "IDUsuario16"
+  },
+  {
+    "text": "Good recipe, but a bit too complicated for my taste.",
+    "rating": 4,
+    "user": "IDUsuario17"
+  },
+  {
+    "text": "Average. I expected more from this dish.",
+    "rating": 3,
+    "user": "IDUsuario18"
+  },
+  {
+    "text": "Not enjoyable at all. I won't be making this again.",
+    "rating": 2,
+    "user": "IDUsuario19"
+  },
+  {
+    "text": "Terrible recipe. The flavors did not complement each other.",
+    "rating": 1,
+    "user": "IDUsuario20"
+  }
+]

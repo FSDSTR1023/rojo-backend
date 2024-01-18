@@ -25,6 +25,7 @@ const categories = [
   'Comfort Food',
   'Japanese',
   'Indian',
+  'Seafood',
 ]
 
 const recipeSchema = new Schema({
