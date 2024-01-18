@@ -517,5 +517,164 @@
     "opinions": [],
     "author": "657b18ed4bef22d724acd501",
     "imageUrl": "https://canalcocina.es/medias/_cache/zoom-7c61587303c175f0510808b8a288d099-920-518.jpg"
+  },
+  {
+    "title": "Risotto de Langostinos y Espárragos",
+    "ingredients": [
+      "Arroz Arborio",
+      "Langostinos",
+      "Espárragos",
+      "Cebolla",
+      "Caldo de pescado",
+      "Vino blanco",
+      "Queso parmesano rallado",
+      "Mantequilla",
+      "Aceite de oliva",
+      "Ajo",
+      "Perejil fresco",
+      "Sal",
+      "Pimienta"
+    ],
+    "preparation": [
+      {
+        "title": "Paso 1: Preparar Ingredientes",
+        "description": "Pela y desvena los langostinos. Corta los espárragos, cebolla y ajo. Ralla el queso parmesano. Pica el perejil."
+      },
+      {
+        "title": "Paso 2: Sofreír y Cocinar el Arroz",
+        "description": "Sofríe la cebolla en mantequilla y aceite. Agrega el arroz y cocina hasta que esté ligeramente dorado. Añade el vino y deja reducir."
+      },
+      {
+        "title": "Paso 3: Agregar Ingredientes",
+        "description": "Incorpora los langostinos, espárragos, ajo y perejil. Agrega caldo de pescado gradualmente mientras remueves constantemente."
+      },
+      {
+        "title": "Paso 4: Finalizar y Servir",
+        "description": "Una vez el arroz esté al dente, retira del fuego, añade queso parmesano y mantequilla. Deja reposar unos minutos antes de servir."
+      }
+    ],
+    "difficulty": "HARD",
+    "preparationTime": "MODERATE",
+    "categories": ["Italian", "Gourmet", "Dinner Parties"],
+    "rating": 0,
+    "opinions": [],
+    "author": "657b18ed4bef22d724acd501",
+    "imageUrl": "https://www.gourmet.cl/wp-content/uploads/2013/03/risotto-de-camarones.jpg"
+  },
+  {
+    "title": "Pato a la Naranja con Puré de Zanahoria",
+    "ingredients": [
+      "Pato",
+      "Naranjas",
+      "Caldo de ave",
+      "Miel",
+      "Zanahorias",
+      "Crema",
+      "Mantequilla",
+      "Azúcar",
+      "Sal",
+      "Pimienta"
+    ],
+    "preparation": [
+      {
+        "title": "Paso 1: Preparar Pato y Salsa",
+        "description": "Cocina el pato en su propia grasa. Prepara una salsa con jugo de naranja, caldo de ave, miel y cáscara de naranja."
+      },
+      {
+        "title": "Paso 2: Cocinar Zanahorias y Puré",
+        "description": "Hierve las zanahorias y haz un puré con crema, mantequilla, azúcar, sal y pimienta."
+      },
+      {
+        "title": "Paso 3: Terminar Pato y Emplatar",
+        "description": "Glasea el pato con la salsa de naranja y hornea. Sirve con el puré de zanahoria como acompañamiento."
+      }
+    ],
+    "difficulty": "MEDIUM",
+    "preparationTime": "LONG",
+    "categories": ["French", "Gourmet", "Special Occasions"],
+    "rating": 0,
+    "opinions": [],
+    "author": "657b18ed4bef22d724acd501",
+    "imageUrl": "https://us.123rf.com/450wm/mtoome/mtoome1504/mtoome150400134/39336427-filete-de-pato-asado-con-pur%C3%A9-de-zanahoria-naranja-coraz%C3%B3n-de-pato-cocido-a-fuego-lento-y-salsa-de.jpg"
+  },
+  {
+    "title": "Salmón al Horno con Salsa de Mostaza y Miel",
+    "ingredients": [
+      "Filetes de salmón",
+      "Mostaza",
+      "Miel",
+      "Limón",
+      "Ajo",
+      "Perejil fresco",
+      "Aceite de oliva",
+      "Sal",
+      "Pimienta"
+    ],
+    "preparation": [
+      {
+        "title": "Paso 1: Marinado",
+        "description": "Mezcla mostaza, miel, jugo de limón, ajo picado, perejil y aceite de oliva. Cubre los filetes de salmón con la mezcla y deja marinar por al menos 30 minutos."
+      },
+      {
+        "title": "Paso 2: Horneado",
+        "description": "Precalienta el horno y coloca los filetes de salmón en una bandeja. Hornea hasta que el salmón esté cocido y la parte superior esté dorada."
+      },
+      {
+        "title": "Paso 3: Salsa Adicional",
+        "description": "Mezcla más mostaza y miel para hacer una salsa adicional. Sirve el salmón con esta salsa por encima."
+      },
+      {
+        "title": "Paso 4: Acompañamientos",
+        "description": "Acompaña el salmón con rodajas de limón y guarniciones de tu elección. Disfruta de este plato saludable y delicioso."
+      }
+    ],
+    "difficulty": "MEDIUM",
+    "preparationTime": "FAST",
+    "categories": ["Seafood", "Healthy", "Quick Meals"],
+    "rating": 0,
+    "opinions": [],
+    "author": "TuIDDeAutor",
+    "imageUrl": "https://mediacenter.bonduelle.com/cdn/202001/ESGP037_.jpg"
+  },
+  {
+    "title": "Ensalada de Quinoa con Aguacate y Fresas",
+    "ingredients": [
+      "Quinoa",
+      "Aguacate",
+      "Fresas",
+      "Hojas de espinaca",
+      "Nueces",
+      "Queso feta",
+      "Aceite de oliva",
+      "Vinagre balsámico",
+      "Miel",
+      "Sal",
+      "Pimienta"
+    ],
+    "preparation": [
+      {
+        "title": "Paso 1: Cocinar la Quinoa",
+        "description": "Cocina la quinoa según las instrucciones del paquete. Deja enfriar."
+      },
+      {
+        "title": "Paso 2: Preparar Ingredientes",
+        "description": "Corta el aguacate, las fresas y desmenuza el queso feta. Tuesta las nueces en una sartén."
+      },
+      {
+        "title": "Paso 3: Montar la Ensalada",
+        "description": "En un tazón, combina la quinoa cocida, aguacate, fresas, espinacas, nueces y queso feta."
+      },
+      {
+        "title": "Paso 4: Aliñar y Servir",
+        "description": "Prepara un aliño mezclando aceite de oliva, vinagre balsámico, miel, sal y pimienta. Vierte sobre la ensalada y mezcla bien antes de servir."
+      }
+    ],
+    "difficulty": "EASY",
+    "preparationTime": "FAST",
+    "categories": ["Healthy", "Vegetarian", "Vegan", "Quick Meals"],
+    "rating": 0,
+    "opinions": [],
+    "author": "TuIDDeAutor",
+    "imageUrl": "https://es.cravingsjournal.com/wp-content/uploads/2019/12/ensalada-con-fresas-5.jpg"
   }
 ]
