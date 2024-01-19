@@ -87,6 +87,23 @@ async function addOpinion(req, res) {
   }
 }
 
+async function deleteOpinion(req, res) {
+  const recipeId = req.params.id
+  const opinionId = req.body.opinionId
+
+  try {
+    // Delete opinion from the array
+    await Recipe.findByIdAndUpdate(recipeId, { $pull: { opinions: { _id: opinionId } } })
+
+    // Send response
+    res.status(200).json({
+      msg: 'Opinion deleted successfully',
+    })
+  } catch (err) {
+    res.status(400).json(err)
+  }
+}
+
 async function markRecipeAsFavorite(req, res) {
   const { userId, recipeId } = req.body
 
@@ -117,5 +134,6 @@ module.exports = {
   getRecipeById,
   deleteRecipe,
   addOpinion,
+  deleteOpinion,
   markRecipeAsFavorite,
 }

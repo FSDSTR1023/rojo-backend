@@ -15,6 +15,7 @@ router.put('/:id', recipeController.updateRecipe)
 
 // PATCH
 router.patch('/opinion/add/:id', recipeController.addOpinion)
+router.patch('/opinion/delete/:id', recipeController.deleteOpinion)
 
 // DELETE
 router.delete('/:id', recipeController.deleteRecipe)
