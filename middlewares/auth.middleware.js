@@ -8,13 +8,14 @@ function auth(req, res, next) {
 
     if (id) {
       req.userId = id
-      next()
     } else {
-      res.status(401).json({ msg: 'Unauthorized user' })
+      return res.status(401).json({ msg: 'Unauthorized user' })
     }
   } catch (err) {
-    res.status(401).json({ err })
+    return res.status(401).json({ err })
   }
+
+  next()
 }
 
 module.exports = { auth }

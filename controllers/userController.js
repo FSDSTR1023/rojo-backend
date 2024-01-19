@@ -71,6 +71,14 @@ async function loginUser(req, res) {
     })
 }
 
+async function logoutUser(req, res) {
+  try {
+    res.clearCookie('token').send()
+  } catch (err) {
+    res.status(400).json(err)
+  }
+}
+
 async function updateUser(req, res) {
   User.findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then((user) => {
@@ -167,15 +175,32 @@ async function removeFavoriteRecipe(req, res) {
   }
 }
 
+async function checkAuthToken(req, res) {
+  const userId = req.userId
+  if (userId) {
+    User.findById(userId)
+      .then((user) => {
+        res.status(200).json(user)
+      })
+      .catch((err) => {
+        res.status(400).json(err)
+      })
+  } else {
+    res.status(400).json(err)
+  }
+}
+
 module.exports = {
   getAllUsers,
   createUser,
   getUserById,
   loginUser,
+  logoutUser,
   updateUser,
   deleteUser,
   addFollower,
   removeFollower,
   addFavoriteRecipe,
   removeFavoriteRecipe,
+  checkAuthToken,
 }
