@@ -63,7 +63,20 @@ const importData = async () => {
     })
 
     // Create recipes
-    await Recipe.create(recipesWithUser)
+    const createdRecipes = await Recipe.create(recipesWithUser)
+
+    // Assign recipes to authors
+    createdRecipes.forEach(async (recipe) => {
+      const author = recipe.author
+      await User.findByIdAndUpdate(author, { $addToSet: { recipes: recipe } }, { new: true })
+    })
+
+    // Assign random favorite recipes
+    createdUsers.forEach(async (user) => {
+      const numFavRecipes = random.getRandomIntInclusive(1, 10)
+      const favRecipes = random.elements(createdRecipes, numFavRecipes).map((r) => r._id)
+      await User.findByIdAndUpdate(user._id, { favRecipes }, { new: true })
+    })
 
     console.log(`Data successfully imported`.green.inverse)
   } catch (err) {
