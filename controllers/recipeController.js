@@ -92,15 +92,65 @@ async function deleteOpinion(req, res) {
   const opinionId = req.body.opinionId
 
   try {
-    // Delete opinion from the array
-    await Recipe.findByIdAndUpdate(recipeId, { $pull: { opinions: { _id: opinionId } } })
+    // Get current recipe
+    const recipe = await Recipe.findById(recipeId)
+
+    const opinion = recipe.opinions.find((o) => o._id.toString() === opinionId)
+    const rating = opinion.rating
+
+    // Update rating with new opinion rating
+    const opinionsLength = recipe.opinions.length
+    const currentRating = recipe.rating
+    const newRating = (currentRating * opinionsLength - rating) / (opinionsLength - 1)
+
+    // Delete opinion from the array and update rating
+    await Recipe.findByIdAndUpdate(recipeId, { $pull: { opinions: { _id: opinionId } }, rating: newRating })
 
     // Send response
     res.status(200).json({
       msg: 'Opinion deleted successfully',
+      updatedRating: newRating,
     })
   } catch (err) {
     res.status(400).json(err)
+  }
+}
+
+async function updateOpinion(req, res) {
+  const recipeId = req.params.id
+  const { text, rating, opinionId } = req.body
+  const { user } = req.userId
+
+  try {
+    // Get current recipe
+    const recipe = await Recipe.findById(recipeId)
+    const opinion = recipe.opinions.find((o) => o._id.toString() === opinionId)
+
+    // Update rating with new opinion rating
+    const opinionRating = opinion.rating
+    const opinionsLength = recipe.opinions.length
+    const currentRating = recipe.rating
+    const newRating = (currentRating * opinionsLength - opinionRating + rating) / opinionsLength
+
+    // Delete opinion from the array and update rating
+    const updatedRecipe = await Recipe.findOneAndUpdate(
+      { _id: recipeId, 'opinions._id': opinionId },
+      { $set: { rating: newRating, 'opinions.$.text': text, 'opinions.$.rating': rating, 'opinions.$.user': user } },
+      { new: true },
+    )
+
+    // Updated opinion
+    const updatedOpinion = updatedRecipe.opinions.find((o) => o._id.toString() === opinionId)
+    const updatedRating = updatedRecipe.rating
+
+    // Send response
+    res.status(200).json({
+      msg: 'Opinion updated successfully',
+      updatedOpinion,
+      updatedRating,
+    })
+  } catch (err) {
+    res.status(400).json({ msg: `Error updating comment: ${err}` })
   }
 }
 
@@ -135,5 +185,6 @@ module.exports = {
   deleteRecipe,
   addOpinion,
   deleteOpinion,
+  updateOpinion,
   markRecipeAsFavorite,
 }
