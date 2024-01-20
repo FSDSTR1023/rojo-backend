@@ -59,7 +59,8 @@ const importData = async () => {
       const author = random.element(createdUsers)._id
       const numOpinions = random.getRandomIntInclusive(1, 10)
       const randomOpinions = random.elements(opinionsWithUser, numOpinions)
-      return { ...recipe, author, opinions: randomOpinions }
+      const rating = randomOpinions.reduce((acc, opinion) => acc + opinion.rating, 0) / randomOpinions.length
+      return { ...recipe, author, opinions: randomOpinions, rating }
     })
 
     // Create recipes
