@@ -34,19 +34,19 @@ const importData = async () => {
     // Add random followers
     const usersWithFollowers = createdUsers.map((user) => {
       const otherUsers = createdUsers.filter((u) => u._id !== user._id)
-      const numFollowers = random.getRandomIntInclusive(1, 5)
+      const numFollowers = random.getRandomIntInclusive(3, 6)
       const randomFollowers = random.elements(otherUsers, numFollowers).map((e) => e._id)
       return { id: user._id, followers: randomFollowers }
     })
-    usersWithFollowers.forEach(async (user) => {
-      user.followers.forEach(async (follower) => {
-        // console.log(`${user.id}`.blue.inverse, `${follower}`.yellow.inverse)
+
+    for (const user of usersWithFollowers) {
+      for (const follower of user.followers) {
         await Promise.all([
           User.findByIdAndUpdate(follower, { $addToSet: { following: user.id } }, { new: true }),
           User.findByIdAndUpdate(user.id, { $addToSet: { followers: follower } }, { new: true }),
         ])
-      })
-    })
+      }
+    }
 
     //Assign random user to opinions
     const opinionsWithUser = opinions.map((opinion) => {
