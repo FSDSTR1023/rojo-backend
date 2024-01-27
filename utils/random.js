@@ -10,13 +10,12 @@ const elements = (array, n) => {
   const elements = []
   const numbers = []
 
-  for (let i = 0; i < n; i++) {
+  while (elements.length < n) {
     const randomIndex = Math.floor(Math.random() * array.length)
 
     if (!numbers.includes(randomIndex)) {
+      numbers.push(randomIndex)
       elements.push(array[randomIndex])
-    } else {
-      i--
     }
   }
 
