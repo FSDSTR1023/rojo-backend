@@ -33,6 +33,8 @@ async function updateRecipe(req, res) {
 
 async function getRecipeById(req, res) {
   Recipe.findById(req.params.id)
+    .populate({ path: 'opinions.user', select: 'userName imageUrl' })
+    .exec()
     .then((recipes) => {
       res.status(200).json(recipes)
     })
