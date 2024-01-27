@@ -22,7 +22,9 @@ app.use(
 app.use(cookieParser())
 
 // Connect to DB
-db()
+if (!!process.env.NODE_ENV && process.env.NODE_ENV !== 'test') {
+  db()
+}
 
 // Middlewares
 app.use(testMiddleware.logginCallRoute)
