@@ -34,19 +34,19 @@ const importData = async () => {
     // Add random followers
     const usersWithFollowers = createdUsers.map((user) => {
       const otherUsers = createdUsers.filter((u) => u._id !== user._id)
-      const numFollowers = random.getRandomIntInclusive(1, 5)
+      const numFollowers = random.getRandomIntInclusive(3, 6)
       const randomFollowers = random.elements(otherUsers, numFollowers).map((e) => e._id)
       return { id: user._id, followers: randomFollowers }
     })
-    usersWithFollowers.forEach(async (user) => {
-      user.followers.forEach(async (follower) => {
-        // console.log(`${user.id}`.blue.inverse, `${follower}`.yellow.inverse)
+
+    for (const user of usersWithFollowers) {
+      for (const follower of user.followers) {
         await Promise.all([
           User.findByIdAndUpdate(follower, { $addToSet: { following: user.id } }, { new: true }),
           User.findByIdAndUpdate(user.id, { $addToSet: { followers: follower } }, { new: true }),
         ])
-      })
-    })
+      }
+    }
 
     //Assign random user to opinions
     const opinionsWithUser = opinions.map((opinion) => {
@@ -57,13 +57,27 @@ const importData = async () => {
     // Assign random user and opinions to recipes
     const recipesWithUser = recipes.map((recipe) => {
       const author = random.element(createdUsers)._id
-      const numOpinions = random.getRandomIntInclusive(1, 10)
+      const numOpinions = random.getRandomIntInclusive(5, 10)
       const randomOpinions = random.elements(opinionsWithUser, numOpinions)
-      return { ...recipe, author, opinions: randomOpinions }
+      const rating = randomOpinions.reduce((acc, opinion) => acc + opinion.rating, 0) / randomOpinions.length
+      return { ...recipe, author, opinions: randomOpinions, rating }
     })
 
     // Create recipes
-    await Recipe.create(recipesWithUser)
+    const createdRecipes = await Recipe.create(recipesWithUser)
+
+    // Assign recipes to authors
+    for (const recipe of createdRecipes) {
+      const author = recipe.author
+      await User.findByIdAndUpdate(author, { $addToSet: { recipes: recipe } }, { new: true })
+    }
+
+    // Assign random favorite recipes
+    for (const user of createdUsers) {
+      const numFavRecipes = random.getRandomIntInclusive(5, 10)
+      const favRecipes = random.elements(createdRecipes, numFavRecipes).map((r) => r._id)
+      await User.findByIdAndUpdate(user._id, { favRecipes }, { new: true })
+    }
 
     console.log(`Data successfully imported`.green.inverse)
   } catch (err) {
