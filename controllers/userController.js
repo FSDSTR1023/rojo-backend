@@ -31,6 +31,11 @@ async function getAllUsers(_req, res) {
 
 async function getUserById(req, res) {
   User.findById(req.params.id)
+    .populate({
+      path: 'favRecipes',
+      select: 'title imageUrl difficulty categories preparationTime',
+    })
+    .exec()
     .then((user) => {
       res.status(200).json(user)
     })
