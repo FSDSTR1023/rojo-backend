@@ -4,6 +4,7 @@ const port = 3000
 const cors = require('cors')
 const db = require('./config/db')
 const cookieParser = require('cookie-parser')
+const cloudinary = require('./config/cloudinary')
 
 const testMiddleware = require('./middlewares/test.middleware')
 const recipeRoutes = require('./routes/recipe.routes')
