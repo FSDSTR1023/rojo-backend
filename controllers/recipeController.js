@@ -73,6 +73,8 @@ async function addOpinion(req, res) {
       { $addToSet: { opinions: opinion }, rating: newRating },
       { new: true },
     )
+      .populate({ path: 'opinions.user', select: 'userName imageUrl' })
+      .exec()
 
     // Extract updated values
     const updatedOpinion = updatedRecipe.opinions.pop()
@@ -140,6 +142,8 @@ async function updateOpinion(req, res) {
       { $set: { rating: newRating, 'opinions.$.text': text, 'opinions.$.rating': rating, 'opinions.$.user': user } },
       { new: true },
     )
+      .populate({ path: 'opinions.user', select: 'userName imageUrl' })
+      .exec()
 
     // Updated opinion
     const updatedOpinion = updatedRecipe.opinions.find((o) => o._id.toString() === opinionId)
