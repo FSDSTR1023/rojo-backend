@@ -86,6 +86,11 @@ async function logoutUser(req, res) {
 
 async function updateUser(req, res) {
   User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .populate({
+      path: 'favRecipes',
+      select: 'title imageUrl difficulty categories preparationTime',
+    })
+    .exec()
     .then((user) => {
       res.status(200).json(user)
     })
