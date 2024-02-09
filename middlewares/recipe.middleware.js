@@ -1,7 +1,7 @@
 const { DIFFICULTY, PREPARATION_TIME, CATEGORIES } = require('../constants/recipe.js')
 
 function filters(req, res, next) {
-  const { author, difficulty, preparationTime, categories, ingredients } = req.query
+  const { author, difficulty, preparationTime, categories, ingredients, minRating, maxRating } = req.query
 
   const verifiedCategories =
     typeof req.query.categories === 'object'
@@ -14,8 +14,14 @@ function filters(req, res, next) {
     ...(PREPARATION_TIME.includes(preparationTime) && { preparationTime }),
     ...(verifiedCategories && { categories: { $all: verifiedCategories } }),
     ...(ingredients && { ingredients: { $all: ingredients } }),
+    ...((minRating || maxRating) && {
+      rating: {
+        ...(minRating && { $gte: parseFloat(minRating) }),
+        ...(maxRating && { $lte: parseFloat(maxRating) }),
+      },
+    }),
   }
-  console.log(res.filters)
+
   next()
 }
 
@@ -23,7 +29,6 @@ module.exports = { filters }
 
 // Filters
 // Title
-// Rating
 
 // Order
 // Rating
