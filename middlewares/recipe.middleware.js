@@ -1,14 +1,15 @@
 const { DIFFICULTY, PREPARATION_TIME, CATEGORIES } = require('../constants/recipe.js')
 
 function filters(req, res, next) {
-  const { author, difficulty, preparationTime, categories, ingredients, minRating, maxRating } = req.query
+  const { author, difficulty, preparationTime, categories, ingredients, minRating, maxRating, title } = req.query
 
   const verifiedCategories =
     typeof req.query.categories === 'object'
       ? categories.filter((category) => CATEGORIES.includes(category))
       : CATEGORIES.includes(categories) && [categories]
 
-  res.filters = {
+  req.filters = {
+    ...(title && { title: { $regex: new RegExp(title, 'i') } }),
     ...(author && { author }),
     ...(DIFFICULTY.includes(difficulty) && { difficulty }),
     ...(PREPARATION_TIME.includes(preparationTime) && { preparationTime }),

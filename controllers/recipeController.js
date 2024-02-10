@@ -12,7 +12,7 @@ async function createRecipe(req, res) {
 }
 
 async function getAllRecipes(req, res) {
-  Recipe.find(res.filters)
+  Recipe.find(req.filters)
     .then((recipes) => {
       res.status(200).json(recipes)
     })
