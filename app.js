@@ -15,7 +15,7 @@ const { auth } = require('./middlewares/auth.middleware')
 app.use(express.json())
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://health-app-nuclio.netlify.app'],
     credentials: true,
   }),
 )
