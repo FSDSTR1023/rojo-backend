@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/userController')
+const mailController = require('../controllers/mailController')
 const { auth } = require('../middlewares/auth.middleware')
 
 // GET
@@ -10,6 +11,7 @@ router.get('/:id', auth, userController.getUserById)
 
 // POST
 router.post('/', userController.createUser)
+router.post('/new-email', mailController.sendEmail)
 router.post('/login', userController.loginUser)
 router.post('/logout', userController.logoutUser)
 

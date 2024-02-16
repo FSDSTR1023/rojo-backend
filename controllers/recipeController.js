@@ -1,18 +1,19 @@
 const Recipe = require('../models/recipe.model')
 const User = require('../models/user.model')
+const { sendEmailToRecipeCreator } = require('./mailController')
 
 async function createRecipe(req, res) {
-  Recipe.create(req.body)
-    .then((recipes) => {
-      res.status(201).json(recipes)
-    })
-    .catch((err) => {
-      res.status(400).json(err)
-    })
+  try {
+    const recipe = await Recipe.create(req.body)
+    await sendEmailToRecipeCreator(req, recipe)
+    res.status(201).json(recipe)
+  } catch (err) {
+    res.status(400).json(err)
+  }
 }
 
 async function getAllRecipes(req, res) {
-  Recipe.find(res.filters)
+  Recipe.find(req.filters)
     .then((recipes) => {
       res.status(200).json(recipes)
     })
