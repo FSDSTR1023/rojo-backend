@@ -9,7 +9,6 @@ const testMiddleware = require('./middlewares/test.middleware')
 const recipeRoutes = require('./routes/recipe.routes')
 const { filters } = require('./middlewares/recipe.middleware')
 const userRoutes = require('./routes/user.routes')
-const { auth } = require('./middlewares/auth.middleware')
 
 //Config
 app.use(express.json())
@@ -28,7 +27,7 @@ db()
 app.use(testMiddleware.logginCallRoute)
 
 //Routes
-app.use('/recipe', auth, filters, recipeRoutes)
+app.use('/recipe', filters, recipeRoutes)
 app.use('/user', userRoutes)
 
 app.listen(port, () => {
