@@ -161,29 +161,6 @@ async function updateOpinion(req, res) {
   }
 }
 
-async function markRecipeAsFavorite(req, res) {
-  const { userId, recipeId } = req.body
-
-  try {
-    // Verifica si la receta existe
-    const recipe = await Recipe.findById(recipeId)
-    if (!recipe) {
-      return res.status(404).json({ msg: 'Recipe not found' })
-    }
-
-    // Agrega la receta a la lista de favoritos del usuario
-    const user = await User.findByIdAndUpdate(userId, { $addToSet: { favRecipes: recipeId } }, { new: true })
-
-    if (!user) {
-      return res.status(404).json({ msg: 'User not found' })
-    }
-
-    res.status(200).json({ msg: 'Recipe marked as favorite successfully', user })
-  } catch (err) {
-    res.status(400).json(err)
-  }
-}
-
 module.exports = {
   createRecipe,
   getAllRecipes,
@@ -193,5 +170,4 @@ module.exports = {
   addOpinion,
   deleteOpinion,
   updateOpinion,
-  markRecipeAsFavorite,
 }
