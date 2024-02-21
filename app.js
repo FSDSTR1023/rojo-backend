@@ -42,11 +42,25 @@ app.use('/user', userRoutes)
 
 //Socket.Io
 
+const onlineUsers = []
+
 io.on('connection', (socket) => {
   console.log(socket.id + ' is connected')
 
-  socket.on('message', (body) => {
-    socket.broadcast.emit('message', { body, from: socket.id.slice(8) })
+  socket.on('message', (data) => {
+    socket.broadcast.emit('message', data)
+  })
+
+  socket.on('userConnection', (id) => {
+    onlineUsers.push(id)
+    socket.broadcast.emit(onlineUsers)
+    console.log(onlineUsers)
+  })
+
+  socket.on('userDisconnect', (id) => {
+    onlineUsers.filter(id)
+    socket.broadcast.emit(onlineUsers)
+    console.log(onlineUsers)
   })
 })
 
