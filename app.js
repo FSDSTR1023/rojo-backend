@@ -51,15 +51,15 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('message', data)
   })
 
-  socket.on('userConnection', (id) => {
+  socket.on('userConnection', (id, userName) => {
     onlineUsers.push(id)
-    socket.broadcast.emit(onlineUsers)
+    socket.broadcast.emit('userConnectionMsg', userName)
     console.log(onlineUsers)
   })
 
-  socket.on('userDisconnect', (id) => {
-    onlineUsers.filter(id)
-    socket.broadcast.emit(onlineUsers)
+  socket.on('userDisconnect', (id, userName) => {
+    onlineUsers.filter((userId) => userId !== id)
+    socket.broadcast.emit('userDisconnectMsg', userName)
     console.log(onlineUsers)
   })
 })
