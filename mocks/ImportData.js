@@ -58,4 +58,4 @@ const importData = async () => {
   await Recipe.create(recipesWithUser)
 }
 
-module.exports = importData
+module.exports = { importData }
