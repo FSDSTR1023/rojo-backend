@@ -61,7 +61,81 @@ describe('Users', () => {
   })
 
   // TESTS
-  it('/user/login has to return a JWT', async () => {
+
+  // GET
+  it('GET/user has to return status code 200', async () => {
+    const response = await request(app).get('/user').set('Cookie', cookies)
+    expect(response.statusCode).toBe(200)
+  })
+
+  it('GET/user has to return all users', async () => {
+    const response = await request(app).get('/user').set('Cookie', cookies)
+    expect(response.body.length).toBe(USERS.length)
+  })
+
+  it('GET/user/checkAuthToken has to return status code 200', async () => {
+    const response = await request(app).get('/user/authWithToken').set('Cookie', cookies)
+    expect(response.statusCode).toBe(200)
+  })
+
+  it('GET/user/checkAuthToken has to return status code 401 when no token is provided', async () => {
+    const response = await request(app).get('/user/authWithToken')
+    expect(response.statusCode).toBe(401)
+  })
+
+  it('GET/user/checkAuthToken has to return the correct name', async () => {
+    const response = await request(app).get('/user/authWithToken').set('Cookie', cookies)
+    expect(response.body.name).toBe(USERS[0].name)
+  })
+
+  it('GET/user/:id has to return status code 200', async () => {
+    const { id } = jwt.verify(cookies[0].split(';')[0].split('=')[1], process.env.JWT_KEY)
+
+    const response = await request(app).get(`/user/${id}`).set('Cookie', cookies)
+    expect(response.statusCode).toBe(200)
+  })
+
+  it('GET/user/:id has to return status code 404 if user does not exist', async () => {
+    const response = await request(app).get(`/user/123`).set('Cookie', cookies)
+    expect(response.statusCode).toBe(404)
+  })
+
+  // POST
+  it('POST/user has to create a new user', async () => {
+    const newUser = {
+      name: 'Elena',
+      lastName: 'Martinez',
+      email: 'elena@example.com',
+      password: 'clave789',
+      country: 'Mexico',
+      description: 'Apasionada por la cocina tradicional mexicana.',
+      userName: 'elenitaCocina',
+      imageUrl:
+        'https://images.pexels.com/photos/678783/pexels-photo-678783.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      videoUrl: 'https://ejemplo.com/elenaVideo.mp4',
+      recipes: [],
+      favRecipes: [],
+      following: [],
+      followers: [],
+      createdAt: '2023-03-05T12:45:00.000Z',
+    }
+
+    const response = await request(app).post('/user').send(newUser)
+    expect(response.statusCode).toBe(200)
+    expect(response.body.name).toBe(newUser.name)
+  })
+
+  it('POST/user has to return 400 if user is not well provided', async () => {
+    const newUser = {
+      name: 'Elena',
+      lastName: 'Martinez',
+    }
+
+    const response = await request(app).post('/user').send(newUser)
+    expect(response.statusCode).toBe(400)
+  })
+
+  it('POST/user/login has to return a JWT', async () => {
     const msg = {
       email: USERS[0].email,
       password: USERS[0].password,
@@ -71,7 +145,7 @@ describe('Users', () => {
     expect(response.headers['set-cookie'][0]).toMatch(/token=.+; HttpOnly/)
   })
 
-  it('/user/login has to return status code 401 when wrong user is logged in', async () => {
+  it('POST/user/login has to return status code 401 when wrong user is logged in', async () => {
     const msg = {
       email: USERS[0].email,
       password: USERS[1].password,
@@ -80,40 +154,9 @@ describe('Users', () => {
     expect(response.statusCode).toBe(401)
   })
 
-  it('/user has to return status code 200', async () => {
-    const response = await request(app).get('/user').set('Cookie', cookies)
+  it('POST/user/logout has to clear the cookie', async () => {
+    const response = await request(app).post('/user/logout').set('Cookie', cookies)
     expect(response.statusCode).toBe(200)
-  })
-
-  it('/user has to return all users', async () => {
-    const response = await request(app).get('/user').set('Cookie', cookies)
-    expect(response.body.length).toBe(USERS.length)
-  })
-
-  it('/user/checkAuthToken has to return status code 200', async () => {
-    const response = await request(app).get('/user/authWithToken').set('Cookie', cookies)
-    expect(response.statusCode).toBe(200)
-  })
-
-  it('/user/checkAuthToken has to return status code 401 when no token is provided', async () => {
-    const response = await request(app).get('/user/authWithToken')
-    expect(response.statusCode).toBe(401)
-  })
-
-  it('/user/checkAuthToken has to return the correct name', async () => {
-    const response = await request(app).get('/user/authWithToken').set('Cookie', cookies)
-    expect(response.body.name).toBe(USERS[0].name)
-  })
-
-  it('/user/:id has to return status code 200', async () => {
-    const { id } = jwt.verify(cookies[0].split(';')[0].split('=')[1], process.env.JWT_KEY)
-
-    const response = await request(app).get(`/user/${id}`).set('Cookie', cookies)
-    expect(response.statusCode).toBe(200)
-  })
-
-  it('/user/:id has to return status code 404 if user does not exist', async () => {
-    const response = await request(app).get(`/user/123`).set('Cookie', cookies)
-    expect(response.statusCode).toBe(404)
+    expect(response.headers['set-cookie'][0]).toMatch('')
   })
 })
