@@ -160,6 +160,19 @@ describe('Users', () => {
     expect(response.headers['set-cookie'][0]).toMatch('')
   })
 
+  // PUT
+  it('PUT/user has to create a new user', async () => {
+    const { id } = jwt.verify(cookies[0].split(';')[0].split('=')[1], process.env.JWT_KEY)
+    const newUser = {
+      lastName: 'García',
+    }
+
+    const response = await request(app).put(`/user/${id}`).send(newUser).set('Cookie', cookies)
+    expect(response.statusCode).toBe(200)
+    expect(response.body.name).toBe(USERS[0].name)
+    expect(response.body.lastName).toBe(newUser.lastName)
+  })
+
   // DELETE
   it('DELETE/user/:id has to delete the user', async () => {
     const { id } = jwt.verify(cookies[0].split(';')[0].split('=')[1], process.env.JWT_KEY)
