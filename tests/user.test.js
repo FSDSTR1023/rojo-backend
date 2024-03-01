@@ -4,6 +4,7 @@ const app = require('../app')
 const { MongoMemoryServer } = require('mongodb-memory-server')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const User = require('../models/user.model.js')
 const USERS = [
@@ -42,7 +43,7 @@ const USERS = [
     createdAt: '2023-02-20T10:30:00.000Z',
   },
 ]
-let token = ''
+const cookies = []
 
 describe('Users', () => {
   const mongoServer = new MongoMemoryServer()
@@ -50,7 +51,10 @@ describe('Users', () => {
     process.env.NODE_ENV = 'test'
     await mongoServer.start()
     await mongoose.connect(mongoServer.getUri())
-    await User.create(USERS.map((user) => ({ ...user, password: bcrypt.hashSync(user.password, 10) })))
+    const createdUsers = await User.create(
+      USERS.map((user) => ({ ...user, password: bcrypt.hashSync(user.password, 10) })),
+    )
+    cookies.push(`token=${jwt.sign({ id: createdUsers[0]._id }, process.env.JWT_KEY)}`)
   })
   afterAll(async () => {
     await mongoServer.stop()
@@ -64,22 +68,30 @@ describe('Users', () => {
     }
     const response = await request(app).post('/user/login').send(msg)
     expect(response.statusCode).toBe(200)
-    token = response.headers['set-cookie']
-    expect(expect(response.headers['set-cookie'][0]).toMatch(/token=.+; HttpOnly/))
+    expect(response.headers['set-cookie'][0]).toMatch(/token=.+; HttpOnly/)
+  })
+
+  it('/user/login has to return status code 401 when wrong user is logged in', async () => {
+    const msg = {
+      email: USERS[0].email,
+      password: USERS[1].password,
+    }
+    const response = await request(app).post('/user/login').send(msg)
+    expect(response.statusCode).toBe(401)
   })
 
   it('/user has to return status code 200', async () => {
-    const response = await request(app).get('/user').set('Cookie', token)
+    const response = await request(app).get('/user').set('Cookie', cookies)
     expect(response.statusCode).toBe(200)
   })
 
   it('/user has to return all users', async () => {
-    const response = await request(app).get('/user').set('Cookie', token)
+    const response = await request(app).get('/user').set('Cookie', cookies)
     expect(response.body.length).toBe(USERS.length)
   })
 
   it('/user/checkAuthToken has to return status code 200', async () => {
-    const response = await request(app).get('/user/authWithToken').set('Cookie', token)
+    const response = await request(app).get('/user/authWithToken').set('Cookie', cookies)
     expect(response.statusCode).toBe(200)
   })
 
@@ -89,7 +101,19 @@ describe('Users', () => {
   })
 
   it('/user/checkAuthToken has to return the correct name', async () => {
-    const response = await request(app).get('/user/authWithToken').set('Cookie', token)
+    const response = await request(app).get('/user/authWithToken').set('Cookie', cookies)
     expect(response.body.name).toBe(USERS[0].name)
+  })
+
+  it('/user/:id has to return status code 200', async () => {
+    const { id } = jwt.verify(cookies[0].split(';')[0].split('=')[1], process.env.JWT_KEY)
+
+    const response = await request(app).get(`/user/${id}`).set('Cookie', cookies)
+    expect(response.statusCode).toBe(200)
+  })
+
+  it('/user/:id has to return status code 404 if user does not exist', async () => {
+    const response = await request(app).get(`/user/123`).set('Cookie', cookies)
+    expect(response.statusCode).toBe(404)
   })
 })

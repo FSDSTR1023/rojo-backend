@@ -35,7 +35,7 @@ async function getUserById(req, res) {
       res.status(200).json(user)
     })
     .catch((err) => {
-      res.status(400).json(err)
+      res.status(404).json(err)
     })
 }
 
@@ -52,7 +52,7 @@ async function loginUser(req, res) {
       bcrypt.compare(password, user.password, (error, result) => {
         // Check if results
         if (error || !result) {
-          return res.status(403).json({ msg: 'Incorrect Password', error })
+          return res.status(401).json({ msg: 'Incorrect Password', error })
         }
 
         // Generate token
