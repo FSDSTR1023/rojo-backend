@@ -121,7 +121,7 @@ describe('Users', () => {
     }
 
     const response = await request(app).post('/user').send(newUser)
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(201)
     expect(response.body.name).toBe(newUser.name)
   })
 
@@ -158,5 +158,19 @@ describe('Users', () => {
     const response = await request(app).post('/user/logout').set('Cookie', cookies)
     expect(response.statusCode).toBe(200)
     expect(response.headers['set-cookie'][0]).toMatch('')
+  })
+
+  // DELETE
+  it('DELETE/user/:id has to delete the user', async () => {
+    const { id } = jwt.verify(cookies[0].split(';')[0].split('=')[1], process.env.JWT_KEY)
+
+    const response = await request(app).delete(`/user/${id}`).set('Cookie', cookies)
+    expect(response.statusCode).toBe(200)
+    expect(response.body.name).toBe(USERS[0].name)
+  })
+
+  it('DELETE/user/:id has to return status code 404 id wrong user id is provided', async () => {
+    const response = await request(app).delete(`/user/123`).set('Cookie', cookies)
+    expect(response.statusCode).toBe(404)
   })
 })

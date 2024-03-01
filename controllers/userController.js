@@ -11,7 +11,7 @@ async function createUser(req, res) {
 
     User.create({ ...req.body, password: hash })
       .then((user) => {
-        res.status(200).json(user)
+        res.status(201).json(user)
       })
       .catch((err) => {
         res.status(400).json(err)
@@ -95,7 +95,7 @@ async function deleteUser(req, res) {
       res.status(200).json(user)
     })
     .catch((err) => {
-      res.status(400).json(err)
+      res.status(404).json(err)
     })
 }
 
