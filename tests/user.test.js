@@ -42,6 +42,7 @@ const USERS = [
     createdAt: '2023-02-20T10:30:00.000Z',
   },
 ]
+let token = ''
 
 describe('Users', () => {
   const mongoServer = new MongoMemoryServer()
@@ -54,14 +55,8 @@ describe('Users', () => {
   afterAll(async () => {
     await mongoServer.stop()
   })
-  it('/user has to return status code 200', async () => {
-    const response = await request(app).get('/user')
-    expect(response.statusCode).toBe(200)
-  })
-  it('/user has to return all users', async () => {
-    const response = await request(app).get('/user')
-    expect(response.body.length).toBe(USERS.length)
-  })
+
+  // TESTS
   it('/user/login has to return a JWT', async () => {
     const msg = {
       email: USERS[0].email,
@@ -69,5 +64,32 @@ describe('Users', () => {
     }
     const response = await request(app).post('/user/login').send(msg)
     expect(response.statusCode).toBe(200)
+    token = response.headers['set-cookie']
+    expect(expect(response.headers['set-cookie'][0]).toMatch(/token=.+; HttpOnly/))
+  })
+
+  it('/user has to return status code 200', async () => {
+    const response = await request(app).get('/user').set('Cookie', token)
+    expect(response.statusCode).toBe(200)
+  })
+
+  it('/user has to return all users', async () => {
+    const response = await request(app).get('/user').set('Cookie', token)
+    expect(response.body.length).toBe(USERS.length)
+  })
+
+  it('/user/checkAuthToken has to return status code 200', async () => {
+    const response = await request(app).get('/user/authWithToken').set('Cookie', token)
+    expect(response.statusCode).toBe(200)
+  })
+
+  it('/user/checkAuthToken has to return status code 401 when no token is provided', async () => {
+    const response = await request(app).get('/user/authWithToken')
+    expect(response.statusCode).toBe(401)
+  })
+
+  it('/user/checkAuthToken has to return the correct name', async () => {
+    const response = await request(app).get('/user/authWithToken').set('Cookie', token)
+    expect(response.body.name).toBe(USERS[0].name)
   })
 })

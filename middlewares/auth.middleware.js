@@ -9,10 +9,10 @@ function auth(req, res, next) {
     if (id) {
       req.userId = id
     } else {
-      // return res.status(401).json({ msg: 'Unauthorized user' })
+      return res.status(401).json({ msg: 'Unauthorized user' })
     }
   } catch (err) {
-    // return res.status(401).json({ err })
+    return res.status(401).json({ err })
   }
 
   next()
