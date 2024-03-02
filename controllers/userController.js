@@ -116,7 +116,7 @@ async function addFollower(req, res) {
       res.status(200).json({ msg })
     })
     .catch((err) => {
-      res.status(400).json(err)
+      res.status(404).json(err)
     })
 }
 
@@ -137,7 +137,7 @@ async function removeFollower(req, res) {
       res.status(200).json({ msg })
     })
     .catch((err) => {
-      res.status(400).json(err)
+      res.status(404).json(err)
     })
 }
 
@@ -154,7 +154,7 @@ async function addFavoriteRecipe(req, res) {
 
     res.status(200).json(user)
   } catch (err) {
-    res.status(400).json(err)
+    res.status(404).json(err)
   }
 }
 
@@ -171,7 +171,7 @@ async function removeFavoriteRecipe(req, res) {
 
     res.status(200).json(user)
   } catch (err) {
-    res.status(400).json(err)
+    res.status(404).json(err)
   }
 }
 
