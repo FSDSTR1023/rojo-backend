@@ -11,6 +11,7 @@ const testMiddleware = require('./middlewares/test.middleware')
 const recipeRoutes = require('./routes/recipe.routes')
 const { filters } = require('./middlewares/recipe.middleware')
 const userRoutes = require('./routes/user.routes')
+
 const { auth } = require('./middlewares/auth.middleware')
 const server = createServer(app)
 const io = new Server(server, {
@@ -24,20 +25,22 @@ const io = new Server(server, {
 app.use(express.json())
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://health-app-nuclio.netlify.app'],
     credentials: true,
   }),
 )
 app.use(cookieParser())
 
 // Connect to DB
-db()
+if (!!process.env.NODE_ENV && process.env.NODE_ENV !== 'test') {
+  db()
+}
 
 // Middlewares
 app.use(testMiddleware.logginCallRoute)
 
 //Routes
-app.use('/recipe', auth, filters, recipeRoutes)
+app.use('/recipe', filters, recipeRoutes)
 app.use('/user', userRoutes)
 
 //Socket.Io
@@ -65,3 +68,5 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
   console.log(`App y Socket.IO escuchando en el puerto ${port}`)
 })
+
+module.exports = app

@@ -1,24 +1,24 @@
 const express = require('express')
 const router = express.Router()
 const recipeController = require('../controllers/recipeController')
+const { auth } = require('../middlewares/auth.middleware')
 
 // GET
 router.get('/', recipeController.getAllRecipes)
 router.get('/:id', recipeController.getRecipeById)
 
 // POST
-router.post('/', recipeController.createRecipe)
-router.post('/', recipeController.markRecipeAsFavorite)
+router.post('/', auth, recipeController.createRecipe)
 
 // PUT
-router.put('/:id', recipeController.updateRecipe)
+router.put('/:id', auth, recipeController.updateRecipe)
 
 // PATCH
-router.patch('/opinion/add/:id', recipeController.addOpinion)
-router.patch('/opinion/delete/:id', recipeController.deleteOpinion)
-router.patch('/opinion/update/:id', recipeController.updateOpinion)
+router.patch('/opinion/add/:id', auth, recipeController.addOpinion)
+router.patch('/opinion/delete/:id', auth, recipeController.deleteOpinion)
+router.patch('/opinion/update/:id', auth, recipeController.updateOpinion)
 
 // DELETE
-router.delete('/:id', recipeController.deleteRecipe)
+router.delete('/:id', auth, recipeController.deleteRecipe)
 
 module.exports = router

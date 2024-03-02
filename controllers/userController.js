@@ -11,7 +11,7 @@ async function createUser(req, res) {
 
     User.create({ ...req.body, password: hash })
       .then((user) => {
-        res.status(200).json(user)
+        res.status(201).json(user)
       })
       .catch((err) => {
         res.status(400).json(err)
@@ -40,7 +40,7 @@ async function getUserById(req, res) {
       res.status(200).json(user)
     })
     .catch((err) => {
-      res.status(400).json(err)
+      res.status(404).json(err)
     })
 }
 
@@ -57,7 +57,7 @@ async function loginUser(req, res) {
       bcrypt.compare(password, user.password, (error, result) => {
         // Check if results
         if (error || !result) {
-          return res.status(403).json({ msg: 'Incorrect Password', error })
+          return res.status(401).json({ msg: 'Incorrect Password', error })
         }
 
         // Generate token
@@ -67,6 +67,8 @@ async function loginUser(req, res) {
         res
           .cookie('token', token, {
             httpOnly: true,
+            sameSite: 'none',
+            secure: true,
           })
           .json({ msg: 'User logged in' })
       })
@@ -105,7 +107,7 @@ async function deleteUser(req, res) {
       res.status(200).json(user)
     })
     .catch((err) => {
-      res.status(400).json(err)
+      res.status(404).json(err)
     })
 }
 
@@ -126,7 +128,7 @@ async function addFollower(req, res) {
       res.status(200).json({ msg })
     })
     .catch((err) => {
-      res.status(400).json(err)
+      res.status(404).json(err)
     })
 }
 
@@ -147,7 +149,7 @@ async function removeFollower(req, res) {
       res.status(200).json({ msg })
     })
     .catch((err) => {
-      res.status(400).json(err)
+      res.status(404).json(err)
     })
 }
 
@@ -164,7 +166,7 @@ async function addFavoriteRecipe(req, res) {
 
     res.status(200).json(user)
   } catch (err) {
-    res.status(400).json(err)
+    res.status(404).json(err)
   }
 }
 
@@ -181,7 +183,7 @@ async function removeFavoriteRecipe(req, res) {
 
     res.status(200).json(user)
   } catch (err) {
-    res.status(400).json(err)
+    res.status(404).json(err)
   }
 }
 
