@@ -14,14 +14,16 @@ const userRoutes = require('./routes/user.routes')
 app.use(express.json())
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://health-app-nuclio.netlify.app'],
     credentials: true,
   }),
 )
 app.use(cookieParser())
 
 // Connect to DB
-db()
+if (!!process.env.NODE_ENV && process.env.NODE_ENV !== 'test') {
+  db()
+}
 
 // Middlewares
 app.use(testMiddleware.logginCallRoute)
@@ -33,3 +35,5 @@ app.use('/user', userRoutes)
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+module.exports = app
