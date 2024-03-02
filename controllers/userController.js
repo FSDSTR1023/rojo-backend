@@ -31,6 +31,11 @@ async function getAllUsers(_req, res) {
 
 async function getUserById(req, res) {
   User.findById(req.params.id)
+    .populate({
+      path: 'favRecipes',
+      select: 'title imageUrl difficulty categories preparationTime',
+    })
+    .exec()
     .then((user) => {
       res.status(200).json(user)
     })
@@ -62,6 +67,8 @@ async function loginUser(req, res) {
         res
           .cookie('token', token, {
             httpOnly: true,
+            sameSite: 'none',
+            secure: true,
           })
           .json({ msg: 'User logged in' })
       })
@@ -81,6 +88,11 @@ async function logoutUser(req, res) {
 
 async function updateUser(req, res) {
   User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .populate({
+      path: 'favRecipes',
+      select: 'title imageUrl difficulty categories preparationTime',
+    })
+    .exec()
     .then((user) => {
       res.status(200).json(user)
     })

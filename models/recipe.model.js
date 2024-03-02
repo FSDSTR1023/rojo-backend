@@ -1,32 +1,7 @@
 const mongoose = require('mongoose')
+const { DIFFICULTY, PREPARATION_TIME, CATEGORIES } = require('../constants/recipe.js')
 
 const Schema = mongoose.Schema
-
-const difficulty = ['EASY', 'MEDIUM', 'HARD']
-const preparationTime = ['FAST', 'MODERATE', 'LONG']
-const categories = [
-  'Healthy',
-  'Gluten Free',
-  'Vegan',
-  'Vegetarian',
-  'High Calories',
-  'Low Calories',
-  'Lactose Free',
-  'Paleo',
-  'Keto',
-  'High Protein',
-  'Quick Meals',
-  'High Fiber',
-  'Italian',
-  'Gourmet',
-  'Dinner Parties',
-  'French',
-  'Special Occasions',
-  'Comfort Food',
-  'Japanese',
-  'Indian',
-  'Seafood',
-]
 
 const recipeSchema = new Schema({
   title: { type: String, required: true, trim: true, minlength: 3 },
@@ -39,14 +14,14 @@ const recipeSchema = new Schema({
   ],
   difficulty: {
     type: String,
-    enum: difficulty,
+    enum: DIFFICULTY,
     required: true,
     trim: true,
     minlength: 3,
   },
   preparationTime: {
     type: String,
-    enum: preparationTime,
+    enum: PREPARATION_TIME,
     required: true,
     trim: true,
     minlength: 3,
@@ -54,7 +29,7 @@ const recipeSchema = new Schema({
   imageUrl: { type: String },
   videoUrl: { type: String },
   categories: {
-    type: [{ type: String, enum: categories, required: true }],
+    type: [{ type: String, enum: CATEGORIES, required: true }],
     default: [],
   },
   opinions: [
