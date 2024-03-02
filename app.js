@@ -45,8 +45,6 @@ app.use('/user', userRoutes)
 const onlineUsers = []
 
 io.on('connection', (socket) => {
-  console.log(socket.id + ' is connected')
-
   socket.on('message', (data) => {
     socket.broadcast.emit('message', data)
   })
