@@ -21,7 +21,9 @@ app.use(
 app.use(cookieParser())
 
 // Connect to DB
-db()
+if (!!process.env.NODE_ENV && process.env.NODE_ENV !== 'test') {
+  db()
+}
 
 // Middlewares
 app.use(testMiddleware.logginCallRoute)
@@ -33,3 +35,5 @@ app.use('/user', userRoutes)
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+module.exports = app
