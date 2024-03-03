@@ -11,9 +11,7 @@ const recipeRoutes = require('./routes/recipe.routes')
 const { filters } = require('./middlewares/recipe.middleware')
 const userRoutes = require('./routes/user.routes')
 
-const { auth } = require('./middlewares/auth.middleware')
-
-// Configuración
+// Config
 app.use(express.json())
 app.use(
   cors({
@@ -23,7 +21,7 @@ app.use(
 )
 app.use(cookieParser())
 
-// Conexión a la base de datos
+// Connect to DB
 if (!!process.env.NODE_ENV && process.env.NODE_ENV !== 'test') {
   db()
 }
@@ -31,7 +29,7 @@ if (!!process.env.NODE_ENV && process.env.NODE_ENV !== 'test') {
 // Middlewares
 app.use(testMiddleware.logginCallRoute)
 
-// Rutas
+// Routes
 app.use('/recipe', filters, recipeRoutes)
 app.use('/user', userRoutes)
 
@@ -39,11 +37,11 @@ app.use('/user', userRoutes)
 const socketServer = configureSocketServer()
 
 socketServer.listen(4000, () => {
-  console.log(`Socket.IO escuchando en el puerto 4000`)
+  console.log(`Socket.IO listening in the port 4000`)
 })
 
 app.listen(port, () => {
-  console.log(`La aplicación está escuchando en el puerto ${port}`)
+  console.log(`App listening in the port ${port}`)
 })
 
 module.exports = app
