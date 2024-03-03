@@ -2,7 +2,7 @@ const SibApiV3Sdk = require('sib-api-v3-sdk')
 const { apiKey } = require('../config/brevo')
 const Recipe = require('../models/recipe.model')
 const User = require('../models/user.model')
-const htmlContent = require('../data/template')
+const htmlContent = require('../utils/template')
 
 const sendEmail = async (to, subject, textContent) => {
   const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi()

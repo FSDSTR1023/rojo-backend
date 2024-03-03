@@ -3,6 +3,7 @@ const app = express()
 const port = 3000
 const cors = require('cors')
 const db = require('./config/db')
+const configureSocketServer = require('./config/socket')
 const cookieParser = require('cookie-parser')
 
 const testMiddleware = require('./middlewares/test.middleware')
@@ -10,7 +11,7 @@ const recipeRoutes = require('./routes/recipe.routes')
 const { filters } = require('./middlewares/recipe.middleware')
 const userRoutes = require('./routes/user.routes')
 
-//Config
+// Config
 app.use(express.json())
 app.use(
   cors({
@@ -28,12 +29,19 @@ if (!!process.env.NODE_ENV && process.env.NODE_ENV !== 'test') {
 // Middlewares
 app.use(testMiddleware.logginCallRoute)
 
-//Routes
+// Routes
 app.use('/recipe', filters, recipeRoutes)
 app.use('/user', userRoutes)
 
+// Socket.IO
+const socketServer = configureSocketServer()
+
+socketServer.listen(4000, () => {
+  console.log(`Socket.IO listening in the port 4000`)
+})
+
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`App listening in the port ${port}`)
 })
 
 module.exports = app
