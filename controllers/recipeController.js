@@ -40,7 +40,7 @@ async function getRecipeById(req, res) {
       res.status(200).json(recipes)
     })
     .catch((err) => {
-      res.status(400).json(err)
+      res.status(404).json(err)
     })
 }
 
@@ -50,7 +50,7 @@ async function deleteRecipe(req, res) {
       res.status(200).json(recipes)
     })
     .catch((err) => {
-      res.status(400).json(err)
+      res.status(404).json(err)
     })
 }
 
