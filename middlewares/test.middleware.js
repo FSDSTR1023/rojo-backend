@@ -1,5 +1,7 @@
 const logginCallRoute = (req, res, next) => {
-  console.log(`Calling ${req.method} --> ${req.url}`)
+  if (!!process.env.NODE_ENV && process.env.NODE_ENV !== 'test') {
+    console.log(`Calling ${req.method} --> ${req.url}`)
+  }
   next()
 }
 

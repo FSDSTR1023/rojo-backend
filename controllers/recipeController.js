@@ -1,10 +1,9 @@
 const Recipe = require('../models/recipe.model')
-const User = require('../models/user.model')
 const { sendEmailToRecipeCreator } = require('./mailController')
 
 async function createRecipe(req, res) {
   try {
-    const recipe = await Recipe.create(req.body)
+    const recipe = await Recipe.create({ ...req.body, author: req.userId })
     await sendEmailToRecipeCreator(req, recipe)
     res.status(201).json(recipe)
   } catch (err) {

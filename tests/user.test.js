@@ -1,6 +1,6 @@
 const { describe, it, expect, beforeAll, afterAll } = require('@jest/globals')
 const request = require('supertest')
-const app = require('../app')
+const app = require('../app.js')
 const { MongoMemoryServer } = require('mongodb-memory-server')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')

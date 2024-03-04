@@ -21,13 +21,11 @@ function configureSocketServer() {
     socket.on('userConnection', (id, userName) => {
       onlineUsers.push(id)
       socket.broadcast.emit('userConnectionMsg', userName)
-      console.log(onlineUsers)
     })
 
     socket.on('userDisconnect', (id, userName) => {
       onlineUsers.filter((userId) => userId !== id)
       socket.broadcast.emit('userDisconnectMsg', userName)
-      console.log(onlineUsers)
     })
   })
 

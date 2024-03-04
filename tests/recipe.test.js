@@ -1,6 +1,6 @@
 const { describe, it, expect, beforeAll, afterAll } = require('@jest/globals')
 const request = require('supertest')
-const app = require('../app')
+const app = require('../app.js')
 const { MongoMemoryServer } = require('mongodb-memory-server')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
@@ -205,7 +205,6 @@ describe('Recipes', () => {
       categories: ['Healthy', 'Vegetarian', 'Quick Meals'],
       rating: 0,
       opinions: [],
-      author: '657b18ed4bef22d724acd501',
     }
     const response = await request(app).post('/recipe').send(newRecipe).set('Cookie', cookies)
     expect(response.statusCode).toBe(201)
