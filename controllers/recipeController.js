@@ -1,10 +1,9 @@
 const Recipe = require('../models/recipe.model')
-const User = require('../models/user.model')
 const { sendEmailToRecipeCreator } = require('./mailController')
 
 async function createRecipe(req, res) {
   try {
-    const recipe = await Recipe.create(req.body)
+    const recipe = await Recipe.create({ ...req.body, author: req.userId })
     await sendEmailToRecipeCreator(req, recipe)
     res.status(201).json(recipe)
   } catch (err) {
@@ -40,7 +39,7 @@ async function getRecipeById(req, res) {
       res.status(200).json(recipes)
     })
     .catch((err) => {
-      res.status(400).json(err)
+      res.status(404).json(err)
     })
 }
 
@@ -50,7 +49,7 @@ async function deleteRecipe(req, res) {
       res.status(200).json(recipes)
     })
     .catch((err) => {
-      res.status(400).json(err)
+      res.status(404).json(err)
     })
 }
 

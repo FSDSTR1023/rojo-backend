@@ -1,8 +1,5 @@
 const SibApiV3Sdk = require('sib-api-v3-sdk')
-const { apiKey } = require('../config/brevo')
-const Recipe = require('../models/recipe.model')
 const User = require('../models/user.model')
-const htmlContent = require('../data/template')
 
 const sendEmail = async (to, subject, textContent) => {
   const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi()
@@ -16,14 +13,16 @@ const sendEmail = async (to, subject, textContent) => {
     },
   ]
   try {
-    const sendEmail = await apiInstance.sendTransacEmail({
-      sender,
-      to: receivers,
-      subject,
-      textContent,
-      //htmlContent,
-    })
-    return sendEmail
+    if (!!process.env.NODE_ENV && process.env.NODE_ENV !== 'test') {
+      const sendEmail = await apiInstance.sendTransacEmail({
+        sender,
+        to: receivers,
+        subject,
+        textContent,
+      })
+      return sendEmail
+    }
+    return {}
   } catch (error) {
     console.log(error)
     throw new Error('Error al enviar el correo electrónico')
@@ -33,7 +32,7 @@ const sendEmail = async (to, subject, textContent) => {
 async function sendEmailToRecipeCreator(req, recipeData) {
   try {
     // Obtener el ID del autor de la receta
-    const authorId = req.body.author
+    const authorId = req.userId
     // Verificar si se proporcionó un ID de autor válido
     if (!authorId) {
       throw new Error('ID del autor no proporcionado')
